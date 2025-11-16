@@ -23,8 +23,8 @@ import {
 } from '@mui/icons-material';
 import { skills } from '@/data/skills';
 import { useLanguage } from '@/contexts/LanguageContext';
-import Header from '@/components/Layout/Header';
-import SkillCard from '@/components/SkillCard/SkillCard';
+import { Header } from '@/components/Layout/Header';
+import { SkillCard } from '@/components/SkillCard/SkillCard';
 
 export default function SkillDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);

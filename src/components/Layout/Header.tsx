@@ -19,6 +19,11 @@ import {
   ListItem,
   ListItemText,
   Chip,
+  Avatar,
+  Menu,
+  MenuItem,
+  Divider,
+  CircularProgress,
 } from '@mui/material';
 import {
   Brightness4,
@@ -27,24 +32,47 @@ import {
   Search as SearchIcon,
   Close as CloseIcon,
   Language as LanguageIcon,
+  Login as LoginIcon,
+  Logout as LogoutIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useThemeContext } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { searchSkills } from '@/data/skills';
 
 export const Header: React.FC = () => {
   const { mode, toggleTheme } = useThemeContext();
   const { language, setLanguage, t } = useLanguage();
+  const { user, loading, signInWithGoogle, signOut } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const searchResults = searchQuery.length >= 2 ? searchSkills(searchQuery) : [];
 
   const toggleLanguage = () => {
     setLanguage(language === 'ko' ? 'en' : 'ko');
+  };
+
+  const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleUserMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSignIn = async () => {
+    await signInWithGoogle();
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    handleUserMenuClose();
   };
 
   return (
@@ -115,8 +143,8 @@ export const Header: React.FC = () => {
               </Box>
             )}
 
-            {/* Search, Language, and Theme Toggle */}
-            <Box sx={{ display: 'flex', gap: 1 }}>
+            {/* Search, Language, Auth, and Theme Toggle */}
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
               <IconButton color="inherit" onClick={() => setSearchOpen(true)}>
                 <SearchIcon />
               </IconButton>
@@ -128,6 +156,66 @@ export const Header: React.FC = () => {
               >
                 {language === 'ko' ? 'EN' : 'KO'}
               </Button>
+
+              {/* Auth Section */}
+              {typeof window === 'undefined' || loading ? (
+                <Box sx={{ width: 40, height: 40 }} /> // Placeholder to prevent layout shift
+              ) : user ? (
+                <>
+                  <IconButton onClick={handleUserMenuOpen} sx={{ p: 0.5 }}>
+                    <Avatar
+                      src={user.user_metadata?.avatar_url}
+                      alt={user.user_metadata?.full_name || user.email || 'User'}
+                      sx={{ width: 32, height: 32 }}
+                    >
+                      {user.email?.charAt(0).toUpperCase()}
+                    </Avatar>
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleUserMenuClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                  >
+                    <Box sx={{ px: 2, py: 1.5, minWidth: 200 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                        {user.user_metadata?.full_name || 'User'}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
+                        {user.email}
+                      </Typography>
+                    </Box>
+                    <Divider />
+                    <MenuItem onClick={handleUserMenuClose} component={Link} href="/dashboard">
+                      <PersonIcon sx={{ mr: 1, fontSize: 20 }} />
+                      Dashboard
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem onClick={handleSignOut}>
+                      <LogoutIcon sx={{ mr: 1, fontSize: 20 }} />
+                      Sign Out
+                    </MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<LoginIcon />}
+                  onClick={handleSignIn}
+                  sx={{ ml: 1 }}
+                >
+                  {isMobile ? '' : 'Sign In'}
+                </Button>
+              )}
+
               <IconButton onClick={toggleTheme} color="inherit">
                 {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
               </IconButton>

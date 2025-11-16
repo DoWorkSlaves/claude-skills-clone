@@ -1,10 +1,14 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { Container, Typography, Box } from '@mui/material';
-import { Header } from '@/components/Layout/Header';
 import { SkillCard } from '@/components/SkillCard/SkillCard';
 import { getFeaturedSkills, getLatestSkills } from '@/data/skills';
 import { useLanguage } from '@/contexts/LanguageContext';
+
+const Header = dynamic(() => import('@/components/Layout/Header').then(mod => ({ default: mod.Header })), {
+  ssr: false,
+});
 
 export default function Home() {
   const { t } = useLanguage();
