@@ -1,13 +1,18 @@
 /**
- * Design Tokens
+ * Design Tokens - Optimized
  * Central configuration for all design values used throughout the application
+ * Using numeric values where possible for better performance
  */
+
+// Base scale for spacing and sizing
+const BASE_UNIT = 4; // 4px base unit
+const spacing = (multiplier: number) => `${BASE_UNIT * multiplier}px`;
 
 export const designTokens = {
   colors: {
     light: {
-      primary: "#FF6B9D", // Soft Pink
-      secondary: "#FFB84D", // Warm Orange
+      primary: "#FF6B9D",
+      secondary: "#FFB84D",
       background: "#FFFBF5",
       surface: "#FFF5F7",
       text: {
@@ -37,23 +42,22 @@ export const designTokens = {
     },
   },
 
-  // Typography
   typography: {
     fontFamily: {
-      primary:
-        'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      primary: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       code: '"Fira Code", "Courier New", monospace',
     },
+    // Using px values directly for consistency with Material-UI
     fontSize: {
-      xs: "0.75rem", // 12px
-      sm: "0.875rem", // 14px
-      base: "1rem", // 16px
-      lg: "1.125rem", // 18px
-      xl: "1.25rem", // 20px
-      "2xl": "1.5rem", // 24px
-      "3xl": "1.875rem", // 30px
-      "4xl": "2.25rem", // 36px
-      "5xl": "3rem", // 48px
+      xs: 12,
+      sm: 14,
+      base: 16,
+      lg: 18,
+      xl: 20,
+      "2xl": 24,
+      "3xl": 30,
+      "4xl": 36,
+      "5xl": 48,
     },
     fontWeight: {
       light: 300,
@@ -69,45 +73,46 @@ export const designTokens = {
     },
   },
 
-  // Spacing
+  // Using 4px base unit system
   spacing: {
-    xs: "0.25rem", // 4px
-    sm: "0.5rem", // 8px
-    md: "1rem", // 16px
-    lg: "1.5rem", // 24px
-    xl: "2rem", // 32px
-    "2xl": "3rem", // 48px
-    "3xl": "4rem", // 64px
-    "4xl": "6rem", // 96px
+    0: 0,
+    1: spacing(1),   // 4px
+    2: spacing(2),   // 8px
+    3: spacing(3),   // 12px
+    4: spacing(4),   // 16px
+    5: spacing(5),   // 20px
+    6: spacing(6),   // 24px
+    8: spacing(8),   // 32px
+    10: spacing(10), // 40px
+    12: spacing(12), // 48px
+    16: spacing(16), // 64px
+    24: spacing(24), // 96px
   },
 
-  // Breakpoints (responsive)
   breakpoints: {
-    mobile: 0, // 0px - 599px
-    tablet: 600, // 600px - 1023px
-    desktop: 1024, // 1024px - 1439px
-    wide: 1440, // 1440px+
+    mobile: 0,
+    tablet: 600,
+    desktop: 1024,
+    wide: 1440,
   },
 
-  // Border radius
   borderRadius: {
-    none: "0",
-    sm: "0.25rem", // 4px
-    md: "0.5rem", // 8px
-    lg: "0.75rem", // 12px
-    xl: "1rem", // 16px
-    full: "9999px",
+    none: 0,
+    sm: spacing(1),  // 4px
+    md: spacing(2),  // 8px
+    lg: spacing(3),  // 12px
+    xl: spacing(4),  // 16px
+    full: 9999,
   },
 
-  // Shadows
   shadows: {
+    none: "none",
     sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
     md: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
     lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
     xl: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
   },
 
-  // Z-index
   zIndex: {
     base: 0,
     dropdown: 1000,
@@ -117,11 +122,10 @@ export const designTokens = {
     tooltip: 1500,
   },
 
-  // Transitions
   transitions: {
-    fast: "150ms",
-    normal: "300ms",
-    slow: "500ms",
+    fast: 150,
+    normal: 300,
+    slow: 500,
   },
 } as const;
 

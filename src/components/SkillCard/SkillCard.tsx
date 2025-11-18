@@ -13,7 +13,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import { Download as DownloadIcon } from '@mui/icons-material';
+import { Star as StarIcon } from '@mui/icons-material';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface SkillData {
@@ -114,16 +114,14 @@ export const SkillCard: React.FC<SkillCardProps> = ({ skill }) => {
           </Box>
         </CardContent>
 
-        {skill.downloads !== undefined && (
-          <CardActions sx={{ px: 2, pb: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              <DownloadIcon fontSize="small" color="action" />
-              <Typography variant="caption" color="text.secondary">
-                {skill.downloads} {t('home.downloads')}
-              </Typography>
-            </Box>
-          </CardActions>
-        )}
+        <CardActions sx={{ px: 2, pb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            <StarIcon fontSize="small" sx={{ color: theme.palette.warning.main }} />
+            <Typography variant="caption" color="text.secondary">
+              {skill.stars.toLocaleString()} {t('skillDetail.stars')}
+            </Typography>
+          </Box>
+        </CardActions>
       </Card>
     </Link>
   );

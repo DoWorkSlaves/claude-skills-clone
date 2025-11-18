@@ -116,8 +116,8 @@ export const Header: React.FC = () => {
             {/* Desktop Navigation */}
             {!isMobile && (
               <Box sx={{ display: 'flex', gap: 2, flexGrow: 1 }}>
-                <Button component={Link} href="/dashboard" color="inherit">
-                  {t('header.dashboard')}
+                <Button component={Link} href="/" color="inherit">
+                  {t('header.home')}
                 </Button>
                 <Button component={Link} href="/explore" color="inherit">
                   {t('header.explore')}
@@ -192,11 +192,6 @@ export const Header: React.FC = () => {
                         {user.email}
                       </Typography>
                     </Box>
-                    <Divider />
-                    <MenuItem onClick={handleUserMenuClose} component={Link} href="/dashboard">
-                      <PersonIcon sx={{ mr: 1, fontSize: 20 }} />
-                      Dashboard
-                    </MenuItem>
                     <Divider />
                     <MenuItem onClick={handleSignOut}>
                       <LogoutIcon sx={{ mr: 1, fontSize: 20 }} />

@@ -13,7 +13,12 @@
       "WebFetch(domain:api.github.com)",
       "Bash(pkill:*)",
       "Bash(kill:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git fetch:*)",
+      "Bash(git push:*)",
+      "Bash(git remote add:*)",
+      "WebFetch(domain:namu.wiki)"
     ],
     "deny": [],
     "ask": []
