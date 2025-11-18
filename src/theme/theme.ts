@@ -103,7 +103,7 @@ const getThemeOptions = (mode: 'light' | 'dark'): ThemeOptions => {
           root: {
             textTransform: 'none',
             borderRadius: designTokens.borderRadius.md,
-            padding: `${designTokens.spacing.sm} ${designTokens.spacing.lg}`,
+            padding: `${designTokens.spacing[2]} ${designTokens.spacing[4]}`,
             transition: `all ${designTokens.transitions.normal}`,
           },
         },

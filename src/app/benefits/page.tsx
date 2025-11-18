@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Typography, Paper, useTheme, Grid } from '@mui/material';
+import { Box, Container, Typography, Paper, useTheme } from '@mui/material';
 import { Header } from '@/components/Layout/Header';
 import { Footer } from '@/components/Layout/Footer';
 import { ScrollToTopFab } from '@/components/Layout/ScrollToTopFab';
@@ -128,9 +128,20 @@ export default function BenefitsPage() {
           </Box>
 
           {/* Benefits Grid */}
-          <Grid container spacing={4} sx={{ mb: 8 }}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+              },
+              gap: 4,
+              mb: 8,
+            }}
+          >
             {benefits.map((benefit, index) => (
-              <Grid item xs={12} sm={6} md={4} key={benefit.title}>
+              <Box key={benefit.title}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -194,9 +205,9 @@ export default function BenefitsPage() {
                     </Box>
                   </Paper>
                 </motion.div>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
 
           {/* Testimonials */}
           <motion.div
@@ -216,9 +227,18 @@ export default function BenefitsPage() {
               >
                 {t('benefits.testimonials.title')}
               </Typography>
-              <Grid container spacing={4}>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: {
+                    xs: 'repeat(1, 1fr)',
+                    md: 'repeat(3, 1fr)',
+                  },
+                  gap: 4,
+                }}
+              >
                 {testimonials.map((testimonial, index) => (
-                  <Grid item xs={12} md={4} key={index}>
+                  <Box key={index}>
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
@@ -259,9 +279,9 @@ export default function BenefitsPage() {
                         </Typography>
                       </Paper>
                     </motion.div>
-                  </Grid>
+                  </Box>
                 ))}
-              </Grid>
+              </Box>
             </Box>
           </motion.div>
         </motion.div>
