@@ -35,7 +35,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ title, subtitle }) => {
               fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
               fontWeight: 700,
               textAlign: 'center',
-              background: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
+              background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',

@@ -80,7 +80,7 @@ export const Footer: React.FC = () => {
               sx={{
                 fontWeight: 800,
                 mb: 2,
-                background: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
+                background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',

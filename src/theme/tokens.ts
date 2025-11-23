@@ -11,8 +11,8 @@ const spacing = (multiplier: number) => `${BASE_UNIT * multiplier}px`;
 export const designTokens = {
   colors: {
     light: {
-      primary: "#FF6B9D",
-      secondary: "#FFB84D",
+      primary: "#ff6b35",
+      secondary: "#ffc857",
       background: "#FFFBF5",
       surface: "#FFF5F7",
       text: {
@@ -23,11 +23,11 @@ export const designTokens = {
       border: "#FFE4E9",
       error: "#FF6B81",
       success: "#6BCF7F",
-      warning: "#FFB84D",
+      warning: "#ffc857",
     },
     dark: {
-      primary: "#FF85A6",
-      secondary: "#FFC46D",
+      primary: "#ff8a5c",
+      secondary: "#ffd477",
       background: "#2D3436",
       surface: "#36393B",
       text: {
@@ -38,7 +38,7 @@ export const designTokens = {
       border: "#4A4A4A",
       error: "#FF8FA3",
       success: "#7FDB91",
-      warning: "#FFC46D",
+      warning: "#ffd477",
     },
   },
 

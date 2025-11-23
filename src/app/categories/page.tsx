@@ -19,6 +19,7 @@ import {
   Category as CategoryIcon,
 } from '@mui/icons-material';
 import { Header } from '@/components/Layout/Header';
+import { Footer } from '@/components/Layout/Footer';
 import { SkillCard } from '@/components/SkillCard/SkillCard';
 import { CategoryCardSkeleton, SkillCardSkeleton } from '@/components/Skeletons';
 import { getCategories, getSkillsByCategory } from '@/services/supabase';
@@ -356,6 +357,7 @@ export default function CategoriesPage() {
           </Box>
         )}
       </Container>
+      <Footer />
     </>
   );
 }

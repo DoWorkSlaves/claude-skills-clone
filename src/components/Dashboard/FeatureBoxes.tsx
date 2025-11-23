@@ -20,14 +20,14 @@ export const FeatureBoxes: React.FC = () => {
       title: t('features.whatIs.title'),
       description: t('features.whatIs.description'),
       icon: <LightbulbIcon sx={{ fontSize: 48 }} />,
-      gradient: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
+      gradient: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
       href: '/about',
     },
     {
       title: t('features.howToUse.title'),
       description: t('features.howToUse.description'),
       icon: <SchoolIcon sx={{ fontSize: 48 }} />,
-      gradient: 'linear-gradient(135deg, #FFB84D 0%, #6BCF7F 100%)',
+      gradient: 'linear-gradient(135deg, #ffc857 0%, #6BCF7F 100%)',
       href: '/guide',
     },
     {

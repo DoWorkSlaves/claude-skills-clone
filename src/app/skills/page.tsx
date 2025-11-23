@@ -19,6 +19,7 @@ import {
   Search as SearchIcon,
 } from '@mui/icons-material';
 import { Header } from '@/components/Layout/Header';
+import { Footer } from '@/components/Layout/Footer';
 import { SkillCard } from '@/components/SkillCard/SkillCard';
 import { SkillCardSkeleton } from '@/components/Skeletons';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -363,6 +364,7 @@ export default function SkillsPage() {
           </Box>
         )}
       </Container>
+      <Footer />
     </>
   );
 }

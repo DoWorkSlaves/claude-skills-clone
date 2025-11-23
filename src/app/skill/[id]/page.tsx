@@ -440,7 +440,7 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
               fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
               fontWeight: 600,
               textAlign: 'center',
-              background: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
+              background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
