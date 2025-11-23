@@ -42,7 +42,7 @@ export const ScrollToTopFab: React.FC = () => {
           onClick={scrollToTop}
           aria-label="scroll to top"
           sx={{
-            background: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
+            background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
             boxShadow: theme.shadows[8],
             '&:hover': {
               background: 'linear-gradient(135deg, #FF85A6 0%, #FFC46D 100%)',

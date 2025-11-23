@@ -13,34 +13,28 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import { Star as StarIcon } from '@mui/icons-material';
+import {
+  Favorite as LikeIcon,
+  Visibility as ViewIcon,
+} from '@mui/icons-material';
 import { useLanguage } from '@/contexts/LanguageContext';
-
-export interface SkillData {
-  id: string;
-  name: string;
-  description: string;
-  categories: string[];
-  downloads?: number;
-  icon?: string;
-  featured?: boolean;
-  author: string;
-  license: string;
-  stars: number;
-  forks: number;
-  repository?: string;
-  tags?: string[];
-  installCommand?: string;
-}
+import { SkillWithCategory, getLocalizedValue, parseTags } from '@/types/database';
 
 interface SkillCardProps {
-  skill: SkillData;
+  skill: SkillWithCategory;
 }
 
 export const SkillCard: React.FC<SkillCardProps> = ({ skill }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // Get localized values
+  const title = getLocalizedValue(skill.title_ko, skill.title_en, language as 'ko' | 'en');
+  const description = getLocalizedValue(skill.sub_title_ko, skill.sub_title_en, language as 'ko' | 'en');
+  const categoryName = skill.category
+    ? getLocalizedValue(skill.category.category_name_ko, skill.category.category_name_en, language as 'ko' | 'en')
+    : '';
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
@@ -50,6 +44,12 @@ export const SkillCard: React.FC<SkillCardProps> = ({ skill }) => {
       Productivity: '#10b981',
       Communication: '#f59e0b',
       Office: '#6366f1',
+      '개발': '#3b82f6',
+      '창작': '#8b5cf6',
+      '디자인': '#ec4899',
+      '생산성': '#10b981',
+      '커뮤니케이션': '#f59e0b',
+      '오피스': '#6366f1',
     };
     return colors[category] || theme.palette.primary.main;
   };
@@ -79,14 +79,14 @@ export const SkillCard: React.FC<SkillCardProps> = ({ skill }) => {
                 height: isMobile ? 40 : 48,
               }}
             >
-              {skill.icon || skill.name.charAt(0)}
+              {skill.icon || title.charAt(0)}
             </Avatar>
             <Typography
               variant={isMobile ? 'h6' : 'h5'}
               component="h3"
               sx={{ fontWeight: 600 }}
             >
-              {skill.name}
+              {title}
             </Typography>
           </Box>
 
@@ -95,30 +95,35 @@ export const SkillCard: React.FC<SkillCardProps> = ({ skill }) => {
             color="text.secondary"
             sx={{ mb: 2, lineHeight: 1.6 }}
           >
-            {skill.description}
+            {description}
           </Typography>
 
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-            {skill.categories.map((category) => (
+            {categoryName && (
               <Chip
-                key={category}
-                label={category}
+                label={categoryName}
                 size="small"
                 sx={{
-                  bgcolor: getCategoryColor(category) + '20',
-                  color: getCategoryColor(category),
+                  bgcolor: getCategoryColor(categoryName) + '20',
+                  color: getCategoryColor(categoryName),
                   fontWeight: 500,
                 }}
               />
-            ))}
+            )}
           </Box>
         </CardContent>
 
-        <CardActions sx={{ px: 2, pb: 2 }}>
+        <CardActions sx={{ px: 2, pb: 2, justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-            <StarIcon fontSize="small" sx={{ color: theme.palette.warning.main }} />
+            <LikeIcon fontSize="small" sx={{ color: theme.palette.error.main }} />
             <Typography variant="caption" color="text.secondary">
-              {skill.stars.toLocaleString()} {t('skillDetail.stars')}
+              {(skill.likes_count || 0).toLocaleString()}
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            <ViewIcon fontSize="small" sx={{ color: theme.palette.text.secondary }} />
+            <Typography variant="caption" color="text.secondary">
+              {(skill.views_count || 0).toLocaleString()}
             </Typography>
           </Box>
         </CardActions>

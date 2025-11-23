@@ -14,63 +14,158 @@ import {
   IconButton,
   Rating,
   Divider,
+  CircularProgress,
 } from '@mui/material';
 import {
   GitHub as GitHubIcon,
-  Star as StarIcon,
   Download as DownloadIcon,
   Share as ShareIcon,
-  ThumbUp as ThumbUpIcon,
-  ThumbDown as ThumbDownIcon,
-  FavoriteBorder as FavoriteBorderIcon,
   Favorite as FavoriteIcon,
+  FavoriteBorder as FavoriteBorderIcon,
+  Visibility as ViewIcon,
+  Comment as CommentIcon,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { skills } from '@/data/skills';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Header } from '@/components/Layout/Header';
 import { Footer } from '@/components/Layout/Footer';
 import { ScrollToTopFab } from '@/components/Layout/ScrollToTopFab';
+import { InquiryFab } from '@/components/Layout/InquiryFab';
 import { SkillCard } from '@/components/SkillCard/SkillCard';
 import { CommentSection } from '@/components/Comments/CommentSection';
-import { githubService, type GitHubRepoStats } from '@/services/githubService';
+import { SkillDetailSkeleton } from '@/components/Skeletons';
+import {
+  getSkillById,
+  getSkillContents,
+  getSkillLicense,
+  getSkills,
+  incrementViewCount,
+  toggleLike,
+  hasUserLikedSkill,
+  getSkillAverageRating,
+} from '@/services/supabase';
+import {
+  SkillWithCategory,
+  Content,
+  License,
+  getLocalizedValue,
+  parseTags,
+} from '@/types/database';
 
 export default function SkillDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const { id } = resolvedParams;
   const router = useRouter();
   const theme = useTheme();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { user } = useAuth();
 
-  // Find the skill by id
-  const skill = skills.find((s) => s.id === id);
-
-  // State for GitHub stats
-  const [githubStats, setGithubStats] = useState<GitHubRepoStats | null>(null);
-  const [isLoadingStats, setIsLoadingStats] = useState(false);
-
-  // State for reactions
+  // State
+  const [skill, setSkill] = useState<SkillWithCategory | null>(null);
+  const [contents, setContents] = useState<Content[]>([]);
+  const [license, setLicense] = useState<License | null>(null);
+  const [relatedSkills, setRelatedSkills] = useState<SkillWithCategory[]>([]);
+  const [loading, setLoading] = useState(true);
   const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
-  const [favorited, setFavorited] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
 
-  // Fetch GitHub stats on mount
+  // Fetch skill data
   useEffect(() => {
-    if (skill?.repository) {
-      setIsLoadingStats(true);
-      githubService
-        .fetchRepoStats(skill.repository)
-        .then((stats) => {
-          setGithubStats(stats);
-        })
-        .catch((err) => {
-          console.error('Failed to fetch GitHub stats:', err);
-        })
-        .finally(() => {
-          setIsLoadingStats(false);
-        });
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const [skillData, contentsData, licenseData, allSkills, rating] = await Promise.all([
+          getSkillById(id),
+          getSkillContents(id),
+          getSkillLicense(id),
+          getSkills(),
+          getSkillAverageRating(id),
+          new Promise(resolve => setTimeout(resolve, 1000)), // Minimum 1s loading
+        ]);
+
+        if (skillData) {
+          setSkill(skillData);
+          setLikesCount(skillData.likes_count || 0);
+          // Increment view count
+          incrementViewCount(id);
+        }
+        setContents(contentsData);
+        setLicense(licenseData);
+        setAverageRating(rating);
+
+        // Get related skills (random 3, excluding current)
+        const related = allSkills
+          .filter((s) => s.id !== id)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        setRelatedSkills(related);
+
+        // Check if user has liked this skill
+        if (user) {
+          const isLiked = await hasUserLikedSkill(user.id, id);
+          setLiked(isLiked);
+        }
+      } catch (error) {
+        console.error('Error fetching skill:', error);
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [skill?.repository]);
+    fetchData();
+  }, [id, user]);
+
+  // Get content by type
+  const getContentByType = (type: string) => {
+    return contents.find((c) => c.content_type === type)?.content_text || '';
+  };
+
+  // Handle like toggle
+  const handleLikeToggle = async () => {
+    if (!user) {
+      alert(t('common.loginRequired'));
+      return;
+    }
+
+    try {
+      const result = await toggleLike(user.id, id);
+      setLiked(result.liked);
+      setLikesCount(result.likesCount);
+    } catch (error) {
+      console.error('Error toggling like:', error);
+    }
+  };
+
+  // Handle share
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        text: description,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert(t('common.linkCopied'));
+    }
+  };
+
+  // Handle download
+  const handleDownload = () => {
+    if (skill?.download_url) {
+      window.open(skill.download_url, '_blank');
+    }
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <SkillDetailSkeleton />
+      </>
+    );
+  }
 
   if (!skill) {
     return (
@@ -86,42 +181,20 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
     );
   }
 
-  // Get 3 random skills (excluding current)
-  const randomSkills = skills
-    .filter((s) => s.id !== skill.id)
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3);
-
-  const handleCopyInstall = () => {
-    if (skill.installCommand) {
-      navigator.clipboard.writeText(skill.installCommand);
-    }
-  };
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: skill.name,
-        text: skill.description,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
-    }
-  };
-
-  // Mock data for ratings and reviews (in a real app, this would come from backend)
-  const averageRating = 4.5;
-  const totalReviews = 127;
+  // Get localized values
+  const title = getLocalizedValue(skill.title_ko, skill.title_en, language as 'ko' | 'en');
+  const description = getLocalizedValue(skill.sub_title_ko, skill.sub_title_en, language as 'ko' | 'en');
+  const categoryName = skill.category
+    ? getLocalizedValue(skill.category.category_name_ko, skill.category.category_name_en, language as 'ko' | 'en')
+    : '';
+  const tags = parseTags(skill.tags);
 
   return (
     <>
-      {/* 1. Header */}
       <Header />
 
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
-        {/* 2. Icon and Title */}
+        {/* Icon and Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -143,7 +216,7 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
                 boxShadow: theme.shadows[8],
               }}
             >
-              {skill.icon || skill.name.charAt(0)}
+              {skill.icon || title.charAt(0)}
             </Box>
             <Box sx={{ flex: 1 }}>
               <Typography
@@ -154,13 +227,13 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
                   mb: 1,
                 }}
               >
-                {skill.name}
+                {title}
               </Typography>
             </Box>
           </Box>
         </motion.div>
 
-        {/* 3. License, Git, Owner, Download, Share buttons */}
+        {/* License, Git, Owner, Download, Share buttons */}
         <Paper
           elevation={2}
           sx={{
@@ -174,35 +247,45 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
           }}
         >
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, flex: 1 }}>
-            <Chip label={`License: ${githubStats?.license ?? skill.license}`} variant="outlined" />
-            <Chip label={`Owner: ${skill.author}`} variant="outlined" />
-            {isLoadingStats ? (
-              <Skeleton variant="rectangular" width={100} height={32} />
-            ) : (
-              <Chip
-                icon={<StarIcon />}
-                label={`${(githubStats?.stars ?? skill.stars).toLocaleString()} stars`}
-                color="warning"
-                variant="outlined"
-              />
+            {license && (
+              <>
+                <Chip label={`License: ${license.license_type}`} variant="outlined" />
+                {license.owner_id && <Chip label={`Owner: ${license.owner_id}`} variant="outlined" />}
+              </>
             )}
+            <Chip
+              icon={<FavoriteIcon />}
+              label={`${likesCount.toLocaleString()} likes`}
+              color="error"
+              variant="outlined"
+            />
+            <Chip
+              icon={<ViewIcon />}
+              label={`${(skill.views_count || 0).toLocaleString()} views`}
+              variant="outlined"
+            />
+            <Chip
+              icon={<CommentIcon />}
+              label={`${(skill.comments_count || 0).toLocaleString()} comments`}
+              variant="outlined"
+            />
           </Box>
           <Box sx={{ display: 'flex', gap: 2 }}>
-            {skill.installCommand && (
+            {skill.download_url && (
               <Button
                 variant="contained"
                 startIcon={<DownloadIcon />}
-                onClick={handleCopyInstall}
+                onClick={handleDownload}
                 size="large"
               >
-                {t('skillDetail.install')}
+                {t('skillDetail.download')}
               </Button>
             )}
-            {skill.repository && (
+            {license?.github_url && (
               <Button
                 variant="outlined"
                 startIcon={<GitHubIcon />}
-                href={skill.repository}
+                href={license.github_url}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -219,19 +302,18 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
           </Box>
         </Paper>
 
-        {/* 4. Categories, Subtitle, Tags, Ratings, Reviews */}
+        {/* Category, Subtitle, Tags, Ratings */}
         <Box sx={{ mb: 4 }}>
-          {/* Categories */}
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-            {skill.categories.map((category) => (
+          {/* Category */}
+          {categoryName && (
+            <Box sx={{ mb: 2 }}>
               <Chip
-                key={category}
-                label={category}
+                label={categoryName}
                 color="primary"
                 sx={{ fontWeight: 600 }}
               />
-            ))}
-          </Box>
+            </Box>
+          )}
 
           {/* Subtitle/Description */}
           <Typography
@@ -239,13 +321,13 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
             color="text.secondary"
             sx={{ mb: 2, lineHeight: 1.7 }}
           >
-            {skill.description}
+            {description}
           </Typography>
 
           {/* Tags */}
-          {skill.tags && skill.tags.length > 0 && (
+          {tags.length > 0 && (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-              {skill.tags.map((tag) => (
+              {tags.map((tag) => (
                 <Chip
                   key={tag}
                   label={`#${tag}`}
@@ -256,64 +338,57 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
             </Box>
           )}
 
-          {/* Ratings and Reviews */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
-            <Rating value={averageRating} precision={0.5} readOnly size="large" />
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              {averageRating.toFixed(1)}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              ({totalReviews} {t('skillDetail.reviews')})
-            </Typography>
-          </Box>
+          {/* Ratings */}
+          {averageRating > 0 && (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Rating value={averageRating} precision={0.5} readOnly size="large" />
+              <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                {averageRating.toFixed(1)}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                ({skill.comments_count || 0} {t('skillDetail.reviews')})
+              </Typography>
+            </Box>
+          )}
         </Box>
 
-        {/* 5. Main Contents Introduction Section */}
+        {/* Main Contents */}
         <Paper elevation={0} sx={{ p: 4, mb: 4, bgcolor: theme.palette.background.default }}>
-          {skill.whatIsIt && (
+          {getContentByType('what_is') && (
             <Box sx={{ mb: 4 }}>
               <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
                 {t('skillDetail.whatIsIt.title')}
               </Typography>
               <Typography variant="body1" sx={{ lineHeight: 1.8, color: theme.palette.text.secondary }}>
-                {skill.whatIsIt}
+                {getContentByType('what_is')}
               </Typography>
             </Box>
           )}
 
-          {skill.howToUse && (
+          {getContentByType('how_to_use') && (
             <Box sx={{ mb: 4 }}>
               <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
                 {t('skillDetail.howToUse.title')}
               </Typography>
               <Typography variant="body1" sx={{ lineHeight: 1.8, color: theme.palette.text.secondary }}>
-                {skill.howToUse}
+                {getContentByType('how_to_use')}
               </Typography>
             </Box>
           )}
 
-          {skill.keyFeatures && skill.keyFeatures.length > 0 && (
+          {getContentByType('key_features') && (
             <Box>
               <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
                 {t('skillDetail.keyFeatures.title')}
               </Typography>
-              <Box component="ul" sx={{ pl: 3, '& li': { mb: 1.5 } }}>
-                {skill.keyFeatures.map((feature, index) => (
-                  <Typography
-                    component="li"
-                    key={index}
-                    variant="body1"
-                    sx={{ lineHeight: 1.8, color: theme.palette.text.secondary }}
-                  >
-                    {feature}
-                  </Typography>
-                ))}
-              </Box>
+              <Typography variant="body1" sx={{ lineHeight: 1.8, color: theme.palette.text.secondary, whiteSpace: 'pre-line' }}>
+                {getContentByType('key_features')}
+              </Typography>
             </Box>
           )}
         </Paper>
 
-        {/* 6. Quick Reaction Area */}
+        {/* Like Button */}
         <Paper
           elevation={2}
           sx={{
@@ -327,59 +402,26 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
         >
           <Box sx={{ textAlign: 'center' }}>
             <IconButton
-              onClick={() => {
-                setLiked(!liked);
-                if (disliked) setDisliked(false);
-              }}
-              color={liked ? 'primary' : 'default'}
+              onClick={handleLikeToggle}
+              color={liked ? 'error' : 'default'}
               size="large"
             >
-              <ThumbUpIcon fontSize="large" />
+              {liked ? <FavoriteIcon fontSize="large" /> : <FavoriteBorderIcon fontSize="large" />}
             </IconButton>
             <Typography variant="caption" display="block">
-              {t('skillDetail.helpful')}
+              {liked ? t('skillDetail.liked') : t('skillDetail.like')}
             </Typography>
-          </Box>
-
-          <Divider orientation="vertical" flexItem />
-
-          <Box sx={{ textAlign: 'center' }}>
-            <IconButton
-              onClick={() => {
-                setDisliked(!disliked);
-                if (liked) setLiked(false);
-              }}
-              color={disliked ? 'error' : 'default'}
-              size="large"
-            >
-              <ThumbDownIcon fontSize="large" />
-            </IconButton>
-            <Typography variant="caption" display="block">
-              {t('skillDetail.notHelpful')}
-            </Typography>
-          </Box>
-
-          <Divider orientation="vertical" flexItem />
-
-          <Box sx={{ textAlign: 'center' }}>
-            <IconButton
-              onClick={() => setFavorited(!favorited)}
-              color={favorited ? 'error' : 'default'}
-              size="large"
-            >
-              {favorited ? <FavoriteIcon fontSize="large" /> : <FavoriteBorderIcon fontSize="large" />}
-            </IconButton>
-            <Typography variant="caption" display="block">
-              {t('skillDetail.addToFavorites')}
+            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              {likesCount}
             </Typography>
           </Box>
         </Paper>
 
-        {/* 7. Comments */}
+        {/* Comments */}
         <CommentSection skillId={skill.id} />
       </Container>
 
-      {/* 8. Discover Message */}
+      {/* Discover More */}
       <Box
         sx={{
           width: '100%',
@@ -399,7 +441,7 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
               fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
               fontWeight: 600,
               textAlign: 'center',
-              background: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
+              background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -420,7 +462,7 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
         </Container>
       </Box>
 
-      {/* 9. Three Random Skill Cards */}
+      {/* Related Skills */}
       <Container maxWidth="lg" sx={{ mb: 8 }}>
         <Box
           sx={{
@@ -433,24 +475,22 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
             gap: { xs: 3, md: 4 },
           }}
         >
-          {randomSkills.map((randomSkill, index) => (
+          {relatedSkills.map((relatedSkill, index) => (
             <motion.div
-              key={randomSkill.id}
+              key={relatedSkill.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <SkillCard skill={randomSkill} />
+              <SkillCard skill={relatedSkill} />
             </motion.div>
           ))}
         </Box>
       </Container>
 
-      {/* 10. Footer */}
       <Footer />
-
-      {/* 11. FAB */}
+      <InquiryFab />
       <ScrollToTopFab />
     </>
   );

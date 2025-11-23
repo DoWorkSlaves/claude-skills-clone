@@ -4,8 +4,10 @@ import { Box, Container, Typography, Paper, useTheme } from '@mui/material';
 import { Header } from '@/components/Layout/Header';
 import { Footer } from '@/components/Layout/Footer';
 import { ScrollToTopFab } from '@/components/Layout/ScrollToTopFab';
+import { InquiryFab } from '@/components/Layout/InquiryFab';
 import { HeroBanner } from '@/components/Layout/HeroBanner';
 import { DiscoverSection } from '@/components/Layout/DiscoverSection';
+import { PageNavigation } from '@/components/Layout/PageNavigation';
 import { motion } from 'framer-motion';
 import {
   Speed as SpeedIcon,
@@ -191,7 +193,7 @@ export default function BenefitsPage() {
                         variant="h5"
                         sx={{
                           fontWeight: 800,
-                          background: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
+                          background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           backgroundClip: 'text',
@@ -287,13 +289,22 @@ export default function BenefitsPage() {
         </motion.div>
       </Container>
 
+      {/* Page Navigation */}
+      <PageNavigation
+        prevPage={{
+          href: '/guide',
+          label: t('features.howToUse.title'),
+        }}
+      />
+
       {/* Discover Section */}
       <DiscoverSection />
 
       {/* Footer */}
       <Footer />
 
-      {/* FAB */}
+      {/* FABs */}
+      <InquiryFab />
       <ScrollToTopFab />
     </>
   );

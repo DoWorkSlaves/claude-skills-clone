@@ -3,6 +3,7 @@
 import { Header } from '@/components/Layout/Header';
 import { Footer } from '@/components/Layout/Footer';
 import { ScrollToTopFab } from '@/components/Layout/ScrollToTopFab';
+import { InquiryFab } from '@/components/Layout/InquiryFab';
 import { InteractiveHero } from '@/components/Dashboard/InteractiveHero';
 import { FeatureBoxes } from '@/components/Dashboard/FeatureBoxes';
 import { SearchBar } from '@/components/Dashboard/SearchBar';
@@ -28,7 +29,8 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* Floating Action Button */}
+      {/* Floating Action Buttons */}
+      <InquiryFab />
       <ScrollToTopFab />
     </>
   );

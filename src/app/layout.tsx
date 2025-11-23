@@ -5,7 +5,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
-  title: "Ralo Skills - Your Skills Hub",
+  title: "ClaudeHub - Your Skills Hub",
   description: "A comprehensive skills hub featuring Claude AI skills, built with NextJS, Material UI, and design tokens",
 };
 

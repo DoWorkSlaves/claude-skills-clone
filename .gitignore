@@ -39,3 +39,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# for Supabase & IDE & OS
+.supabase/
+.idea/
+*.iml
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+cov_profile/
+lcov.info
+
+
+# Supabase Specific
+supabase/.temp/
+supabase/.branches/
+supabase/functions/**/.env
+
