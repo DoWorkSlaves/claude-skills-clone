@@ -7,74 +7,89 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
-    // 1. CORS Preflight
     if (req.method === 'OPTIONS') {
         return new Response('ok', { headers: corsHeaders })
     }
 
     try {
-        // 2. Supabase 클라이언트 생성 (요청한 유저의 권한을 그대로 사용)
-        // req.headers.get('Authorization')을 넣어줘야 auth.getUser()가 작동합니다.
+        // 1. DB 접속 및 유저 확인
         const supabase = createClient(
             Deno.env.get('SUPABASE_URL') ?? '',
             Deno.env.get('SUPABASE_ANON_KEY') ?? '',
             { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
         )
 
-        // 3. 유저 인증 확인 (보안 필수)
         const { data: { user }, error: authError } = await supabase.auth.getUser()
-        if (authError || !user) {
-            throw new Error('로그인이 필요한 기능입니다.')
-        }
+        if (authError || !user) throw new Error('로그인이 필요합니다.')
 
-        // 4. 요청 파라미터 받기
         const { skill_id } = await req.json()
         if (!skill_id) throw new Error('skill_id가 필요합니다.')
 
         const userId = user.id
 
-        // 5. 이미 좋아요를 눌렀는지 확인
+        // 2. [판단] 이 유저가 이 스킬을 좋아한 기록이 있는지 확인
+        // (스키마에 따라 컬럼명 users, skills 사용)
         const { data: existingLike, error: checkError } = await supabase
             .from('likes')
             .select('id')
-            .eq('user_id', userId)
-            .eq('skills', skill_id) // DB 컬럼명이 skills(FK)라고 가정
+            .eq('users', userId)    // 내 아이디
+            .eq('skills', skill_id) // 그 스킬 아이디
             .maybeSingle()
 
         if (checkError) throw checkError
 
         let isLiked = false
 
-        // 6. 토글 로직 (Insert or Delete)
+        // 3. [행동] 있으면 죽이고(DELETE), 없으면 만든다(INSERT)
         if (existingLike) {
-            // [삭제] 이미 있으므로 취소
-            await supabase.from('likes').delete().eq('id', existingLike.id)
-            isLiked = false
+            // 상황 B: 이미 있다 -> 기록 삭제 (죽이기)
+            const { error: deleteError } = await supabase
+                .from('likes')
+                .delete()
+                .eq('id', existingLike.id) // 찾은 그놈을 삭제
+
+            if (deleteError) throw deleteError
+            isLiked = false // 이제 안 좋아함
+
         } else {
-            // [추가] 없으므로 생성
-            await supabase.from('likes').insert({ user_id: userId, skills: skill_id })
-            isLiked = true
+            // 상황 A: 없다 -> 기록 생성 (새로 만들기)
+            const { error: insertError } = await supabase
+                .from('likes')
+                .insert({
+                    users: userId,    // 누가
+                    skills: skill_id  // 어떤 스킬을
+                })
+
+            if (insertError) throw insertError
+            isLiked = true // 이제 좋아함
         }
 
-        // 7. [중요] likes_count 재계산 (데이터 정확성을 위해 count 쿼리 사용)
-        // 단순히 +1 하는 것보다, 실제 likes 테이블의 개수를 세는 게 동시성 문제에서 안전합니다.
-        const { count: currentCount } = await supabase
+        // 4. [갱신] 스킬 테이블의 좋아요 숫자 업데이트
+        // (단순 +1/-1은 꼬일 수 있으므로, likes 테이블 개수를 세서 넣는게 제일 정확함)
+
+        // 4-1. 현재 진짜 개수 세기
+        const { count: realCount, error: countError } = await supabase
             .from('likes')
             .select('*', { count: 'exact', head: true })
             .eq('skills', skill_id)
 
-        // 8. skills 테이블 업데이트
-        const safeCount = currentCount ?? 0
-        await supabase
+        if (countError) throw countError
+
+        const safeCount = realCount ?? 0
+
+        // 4-2. skills 테이블에 반영하기
+        const { error: updateError } = await supabase
             .from('skills')
             .update({ likes_count: safeCount })
             .eq('id', skill_id)
 
-        // 9. 결과 반환
+        if (updateError) throw updateError
+
+        // 5. 결과 알려주기
         return new Response(
             JSON.stringify({
-                is_liked: isLiked,
-                likes_count: safeCount
+                is_liked: isLiked,      // 현재 상태 (빨간 하트 or 빈 하트)
+                likes_count: safeCount  // 최신 숫자
             }),
             { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
         )
