@@ -1,32 +1,111 @@
-// Follow this setup guide to integrate the Deno language server with your editor:
-// https://deno.land/manual/getting_started/setup_your_environment
-// This enables autocomplete, go to definition, etc.
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
-// Setup type definitions for built-in Supabase Runtime APIs
-import "jsr:@supabase/functions-js/edge-runtime.d.ts"
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
 
-console.log("Hello from Functions!")
+serve(async (req) => {
+    if (req.method === 'OPTIONS') {
+        return new Response('ok', { headers: corsHeaders })
+    }
 
-Deno.serve(async (req) => {
-  const { name } = await req.json()
-  const data = {
-    message: `Hello ${name}!`,
-  }
+    try {
+        const supabase = createClient(
+            Deno.env.get('SUPABASE_URL') ?? '',
+            Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+            { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
+        )
 
-  return new Response(
-    JSON.stringify(data),
-    { headers: { "Content-Type": "application/json" } },
-  )
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
+        if (authError || !user) throw new Error('로그인이 필요합니다.')
+
+        const { skill_id, content_text, rating } = await req.json()
+        if (!skill_id || !content_text || rating === undefined) {
+            throw new Error('필수 정보가 누락되었습니다.')
+        }
+
+        const userId = user.id
+        let actionType = 'inserted'
+
+        // 1. [CHECK] 기존 댓글 확인
+        const { data: existingComment, error: checkError } = await supabase
+            .from('comments')
+            .select('id')
+            .eq('users', userId)    // users
+            .eq('skills', skill_id) // skills
+            .maybeSingle()
+
+        if (checkError) throw checkError
+
+        // 2. [UPSERT] 수정 또는 등록
+        if (existingComment) {
+            // 수정
+            const { error: updateError } = await supabase
+                .from('comments')
+                .update({
+                    comment_text: content_text,
+                    rating: rating
+                })
+                .eq('id', existingComment.id)
+
+            if (updateError) throw updateError
+            actionType = 'updated'
+
+        } else {
+            // 등록
+            const { error: insertError } = await supabase
+                .from('comments')
+                .insert({
+                    users: userId,
+                    skills: skill_id,
+                    comment_text: content_text,
+                    rating: rating
+                })
+
+            if (insertError) throw insertError
+            actionType = 'inserted'
+        }
+
+        // 3. [재계산] 평균 별점
+        const { data: allRatings, error: calcError } = await supabase
+            .from('comments')
+            .select('rating')
+            .eq('fk_skills', skill_id) // fk_skills로 조회
+
+        if (calcError) throw calcError
+
+        const totalCount = allRatings.length
+        const sumRating = allRatings.reduce((acc, curr) => acc + (curr.rating || 0), 0)
+        const averageRating = totalCount > 0
+            ? Math.round((sumRating / totalCount) * 10) / 10
+            : 0
+
+        // 4. [갱신] Skills 테이블 업데이트
+        const { error: updateSkillError } = await supabase
+            .from('skills')
+            .update({ rating: averageRating, comments_count: totalCount })
+            .eq('id', skill_id)
+
+        if (updateSkillError) throw updateSkillError
+
+        // 5. [반환]
+        return new Response(
+            JSON.stringify({
+                success: true,
+                action: actionType,
+                skill_id: skill_id,
+                comments_count: totalCount,
+                rating: averageRating
+            }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+        )
+
+    } catch (error) {
+        return new Response(JSON.stringify({ success: false, error: error.message }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 400,
+        })
+    }
 })
-
-/* To invoke locally:
-
-  1. Run `supabase start` (see: https://supabase.com/docs/reference/cli/supabase-start)
-  2. Make an HTTP request:
-
-  curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/post-comment' \
-    --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-    --header 'Content-Type: application/json' \
-    --data '{"name":"Functions"}'
-
-*/
