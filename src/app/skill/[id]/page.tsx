@@ -31,6 +31,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Header } from '@/components/Layout/Header';
 import { Footer } from '@/components/Layout/Footer';
 import { ScrollToTopFab } from '@/components/Layout/ScrollToTopFab';
+import { InquiryFab } from '@/components/Layout/InquiryFab';
 import { SkillCard } from '@/components/SkillCard/SkillCard';
 import { CommentSection } from '@/components/Comments/CommentSection';
 import { SkillDetailSkeleton } from '@/components/Skeletons';
@@ -489,6 +490,7 @@ export default function SkillDetailPage({ params }: { params: Promise<{ id: stri
       </Container>
 
       <Footer />
+      <InquiryFab />
       <ScrollToTopFab />
     </>
   );

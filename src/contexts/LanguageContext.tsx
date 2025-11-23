@@ -118,6 +118,23 @@ const translations: Record<Language, Record<string, string>> = {
     "common.loginRequired": "로그인이 필요합니다",
     "common.linkCopied": "링크가 복사되었습니다",
 
+    // Inquiry
+    "inquiry.title": "문의하기",
+    "inquiry.name": "이름",
+    "inquiry.email": "이메일",
+    "inquiry.typeLabel": "문의 유형",
+    "inquiry.message": "메시지",
+    "inquiry.submit": "문의 보내기",
+    "inquiry.cancel": "취소",
+    "inquiry.close": "닫기",
+    "inquiry.success": "문의가 성공적으로 접수되었습니다. 빠른 시일 내에 답변 드리겠습니다.",
+    "inquiry.error": "문의 전송 중 오류가 발생했습니다. 다시 시도해주세요.",
+    "inquiry.type.general": "일반 문의",
+    "inquiry.type.bug": "버그 신고",
+    "inquiry.type.feature": "기능 요청",
+    "inquiry.type.partnership": "제휴 문의",
+    "inquiry.type.other": "기타",
+
     // Feature Boxes
     "features.whatIs.title": "클로드 Skills란?",
     "features.whatIs.description":
@@ -346,6 +363,23 @@ const translations: Record<Language, Record<string, string>> = {
     // Common
     "common.loginRequired": "Login required",
     "common.linkCopied": "Link copied to clipboard",
+
+    // Inquiry
+    "inquiry.title": "Contact Us",
+    "inquiry.name": "Name",
+    "inquiry.email": "Email",
+    "inquiry.typeLabel": "Inquiry Type",
+    "inquiry.message": "Message",
+    "inquiry.submit": "Send Inquiry",
+    "inquiry.cancel": "Cancel",
+    "inquiry.close": "Close",
+    "inquiry.success": "Your inquiry has been submitted successfully. We will respond shortly.",
+    "inquiry.error": "An error occurred while sending your inquiry. Please try again.",
+    "inquiry.type.general": "General Inquiry",
+    "inquiry.type.bug": "Bug Report",
+    "inquiry.type.feature": "Feature Request",
+    "inquiry.type.partnership": "Partnership",
+    "inquiry.type.other": "Other",
 
     // Feature Boxes
     "features.whatIs.title": "What are Claude Skills?",

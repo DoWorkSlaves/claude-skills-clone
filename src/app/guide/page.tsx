@@ -4,6 +4,7 @@ import { Box, Container, Typography, Paper, useTheme, Chip } from '@mui/material
 import { Header } from '@/components/Layout/Header';
 import { Footer } from '@/components/Layout/Footer';
 import { ScrollToTopFab } from '@/components/Layout/ScrollToTopFab';
+import { InquiryFab } from '@/components/Layout/InquiryFab';
 import { HeroBanner } from '@/components/Layout/HeroBanner';
 import { DiscoverSection } from '@/components/Layout/DiscoverSection';
 import { PageNavigation } from '@/components/Layout/PageNavigation';
@@ -241,7 +242,8 @@ export default function GuidePage() {
       {/* Footer */}
       <Footer />
 
-      {/* FAB */}
+      {/* FABs */}
+      <InquiryFab />
       <ScrollToTopFab />
     </>
   );
