@@ -22,6 +22,31 @@ serve(async (req) => {
             }
         );
 
+        const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+
+        if (authError || !user) {
+            return new Response(JSON.stringify({ error: "로그인이 필요합니다." }), {
+                status: 401,
+                headers: { ...corsHeaders, "Content-Type": "application/json" }
+            });
+        }
+
+        // DB에서 is_admin 값 조회
+        const { data: userProfile, error: profileError } = await supabaseClient
+            .from('users')
+            .select('is_admin')
+            .eq('id', user.id)
+            .single();
+
+        // 관리자가 아니면(false 이거나 값이 없으면) 403 에러 리턴
+        if (profileError || !userProfile?.is_admin) {
+            console.error(`Unauthorized access attempt by: ${user.email}`);
+            return new Response(JSON.stringify({ error: "관리자 권한이 없습니다." }), {
+                status: 403, // Forbidden
+                headers: { ...corsHeaders, "Content-Type": "application/json" }
+            });
+        }
+
         // 클라이언트 요청 데이터 파싱
         const {
             category_id,
