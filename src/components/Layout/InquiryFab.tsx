@@ -22,6 +22,7 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -29,6 +30,7 @@ const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 export const InquiryFab: React.FC = () => {
   const theme = useTheme();
   const { t } = useLanguage();
+  const { user, signInWithGoogle } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -166,7 +168,25 @@ export const InquiryFab: React.FC = () => {
 
         <form onSubmit={handleSubmit}>
           <DialogContent sx={{ pt: 1 }}>
-            {success ? (
+            {!user ? (
+              <Box sx={{ textAlign: 'center', py: 2 }}>
+                <Alert severity="info" sx={{ mb: 3 }}>
+                  {t('inquiry.signInRequired')}
+                </Alert>
+                <Button
+                  variant="contained"
+                  onClick={signInWithGoogle}
+                  sx={{
+                    background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
+                    '&:hover': {
+                      background: 'linear-gradient(135deg, #ff8a5c 0%, #ffd477 100%)',
+                    },
+                  }}
+                >
+                  {t('inquiry.signIn')}
+                </Button>
+              </Box>
+            ) : success ? (
               <Alert severity="success" sx={{ mb: 2 }}>
                 {t('inquiry.success')}
               </Alert>
@@ -238,7 +258,7 @@ export const InquiryFab: React.FC = () => {
             <Button onClick={handleClose} disabled={loading}>
               {success ? t('inquiry.close') : t('inquiry.cancel')}
             </Button>
-            {!success && (
+            {user && !success && (
               <Button
                 type="submit"
                 variant="contained"
