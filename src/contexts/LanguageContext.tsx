@@ -152,32 +152,66 @@ const translations: Record<Language, Record<string, string>> = {
     "discover.moreSkills.title": "더 많은 놀라운 스킬 발견",
     "discover.moreSkills.subtitle": "관심을 가질 만한 다른 스킬 탐색",
 
-    // About Page
-    "about.hero.title": "ClaudeHub란?",
-    "about.hero.subtitle": "AI 기반 생산성 도구로 가는 관문",
-    "about.intro.title": "AI 개발에 대한 혁신적인 접근",
-    "about.intro.p1":
-      "ClaudeHub는 Claude AI의 힘과 사전 구축된 기능의 포괄적인 라이브러리를 결합한 혁신적인 플랫폼입니다. 매번 처음부터 시작하는 대신 개발자는 일반적이고 복잡한 작업 모두에 대한 검증된 솔루션에 즉시 액세스할 수 있습니다.",
-    "about.intro.p2":
-      "AI 기능을 위한 앱 스토어로 생각하세요. 각 스킬은 우리의 전문 개발자 커뮤니티에 의해 신중하게 제작, 문서화 및 유지 관리됩니다. 코드 생성, 아트 창작, 데이터 분석 또는 워크플로 자동화가 필요하든 도움이 될 스킬이 준비되어 있습니다.",
-    "about.feature1.title": "확장 가능한 플랫폼",
-    "about.feature1.description":
-      "ClaudeHub는 Claude Code 기능을 확장하는 AI 기반 기능의 큐레이션된 마켓플레이스입니다. 각 스킬은 특정 작업을 해결하도록 설계된 사전 구축 모듈입니다.",
-    "about.feature2.title": "커뮤니티 주도",
-    "about.feature2.description":
-      "개발자에 의해, 개발자를 위해 구축되었습니다. 우리 커뮤니티는 코드 생성부터 창의적인 도구에 이르기까지 모두 엄격하게 테스트되고 문서화된 스킬을 기여합니다.",
-    "about.feature3.title": "AI 향상 워크플로",
-    "about.feature3.description":
-      "컨텍스트를 이해하고, 지능형 솔루션을 생성하며, 고유한 요구 사항에 적응하는 특화된 스킬로 Claude AI의 힘을 활용하세요.",
-    "about.howItWorks.title": "작동 방식",
-    "about.howItWorks.step1":
-      "라이브러리 탐색: 개발 도구부터 창의적인 애플리케이션까지 카테고리별로 구성된 큐레이션된 스킬 컬렉션을 탐색하세요.",
-    "about.howItWorks.step2":
-      "한 번의 명령으로 설치: 각 스킬에는 Claude Code와 원활하게 통합되는 간단한 설치 명령이 함께 제공됩니다.",
-    "about.howItWorks.step3":
-      "창작 시작: 설치되면 스킬을 즉시 사용할 수 있습니다. 구성이 필요 없습니다. 프로젝트에서 바로 사용하세요.",
-    "about.howItWorks.step4":
-      "공유 및 기여: 스킬이 도움이 되었나요? 자신만의 스킬을 기여하거나 오픈 소스 커뮤니티를 통해 기존 스킬을 개선하는 데 도움을 주세요.",
+    // About Page - What is Claude Skill
+    "about.hero.title": "클로드 스킬이란?",
+    "about.hero.subtitle": "AI가 사용 가능한 도구",
+
+    "about.whatIs.title": "클로드 스킬이란?",
+    "about.whatIs.subtitle": "AI가 사용 가능한 도구",
+    "about.whatIs.description": "클로드 스킬은 클로드 AI의 능력을 특정 작업에 맞게 확장하는 전문 지식 패키지에요.",
+    "about.whatIs.analogy": "마치 스마트폰에 앱을 설치하듯이, 클로드에 스킬을 추가하면 더욱 전문적이고 정확한 작업을 수행할 수 있게 돼요.",
+
+    "about.why.title": "왜 클로드 스킬이 필요할까요?",
+    "about.why.intro": "클로드는 기본적으로도 똑똑하지만, 특정 작업을 할 때는 세부적인 가이드라인이 필요해요. 예를 들어,",
+    "about.why.example1": "워드 문서를 만들 때: 어떤 형식으로 만들어야 할까요? 글꼴은? 여백은? 말투는?",
+    "about.why.example2": "프레젠테이션을 제작할 때: 슬라이드 레이아웃은 어떻게 구성해야 할까요? 회사 로고는 어디에 넣나요?",
+    "about.why.example3": "스프레드시트(엑셀)를 다룰 때: 수식은 어떻게 처리하고, 데이터는 어떻게 정리해야 할까요?",
+    "about.why.conclusion": "클로드 스킬은 전문가들의 노하우와 모범 사례를 담은 설명서에요. 클로드는 스킬을 읽고, 마치 그 분야의 전문가처럼 작업을 수행할 수 있어요.",
+
+    "about.example.title": "실제 예시",
+    "about.example.intro": "문서 작성 스킬을 예로 들어볼까요?",
+    "about.example.withoutSkill": "스킬이 없다면 클로드는 기본적인 워드 문서만 만들 수 있어요. 하지만 문서 작성 스킬을 활용한다면,",
+    "about.example.feature1": "전문적인 서식과 스타일 적용",
+    "about.example.feature2": "목차와 페이지 번호 자동 생성",
+    "about.example.feature3": "표와 이미지의 적절한 배치",
+    "about.example.feature4": "문서 편집 기록 추적",
+    "about.example.conclusion": "이 모든 것을 높은 품질과 정확성으로 처리할 수 있습니다.",
+    "about.example.before": "기존",
+    "about.example.after": "클로드 스킬과 함께라면",
+
+    "about.create.title": "누구나 스킬을 만들 수 있습니다",
+    "about.create.subtitle": "클로드 스킬은 어떻게 일을 해야 하는지에 대한 설명서에요.",
+    "about.create.description": "클로드 스킬의 가장 큰 장점은 누구나 만들 수 있다는 점입니다. 특정 분야의 전문가라면, 자신의 지식을 스킬로 만들어 다른 사람들과 공유할 수 있습니다. 디자이너, 마케터, 교사, 연구자 등 각자의 전문성을 담은 스킬을 만들 수 있어요.",
+
+    "about.hub.title": "클로드 허브가 해결하는 문제",
+    "about.hub.problem": "클로드 스킬이 많아지면 어떤 스킬이 좋은지, 신뢰할 수 있는지 알기 어려워져요. 검증되지 않은 스킬을 사용하면 원하는 결과를 얻지 못하거나, 오히려 작업이 더 복잡해질 수 있어요.",
+    "about.hub.solution": "클로드 허브는 이렇게 다릅니다",
+    "about.hub.description": "클로드 허브는 커뮤니티가 함께 만드는 검증된 스킬 라이브러리에요.",
+
+    "about.hub.feature1.title": "신뢰성 검증",
+    "about.hub.feature1.description": "사용자들의 리뷰와 평가를 통해 실제로 잘 작동하는 스킬만 추천해요. 직접 써본 사람들의 생생한 후기를 확인할 수 있어요.",
+    "about.hub.feature2.title": "체계적인 분류",
+    "about.hub.feature2.description": "업무용, 창작용, 학습용 등 목적별로 스킬을 쉽게 찾을 수 있어요. 내가 필요한 스킬을 몇 번의 클릭만으로 발견할 수 있죠.",
+    "about.hub.feature3.title": "커뮤니티의 지혜",
+    "about.hub.feature3.description": "다양한 사용자들이 스킬을 공유하고, 개선 아이디어를 나누며, 함께 더 나은 스킬을 만들어가고 있어요. 혼자서는 생각하지 못했던 활용법을 배울 수도 있겠죠?",
+    "about.hub.feature4.title": "실전 활용 가이드",
+    "about.hub.feature4.description": "단순히 스킬만 제공하는 게 아니라, 어떻게 사용하는지, 어떤 상황에서 유용한지에 대한 상세하고 친절한 가이드도 함께 제공해요.",
+
+    "about.forEveryone.title": "모두를 위한 스킬 허브",
+    "about.forEveryone.description": "클로드 허브는 개발자뿐만 아니라, 일반 사용자를 위한 공간이에요. 복잡한 기술 지식 없이도 필요한 스킬을 찾고, 클로드의 능력을 최대한 활용할 수 있도록 도와드릴게요.",
+    "about.forEveryone.cta": "AI 시대, 클로드와 함께 더 스마트하게 일하고 싶으신가요? 클로드 허브에서 검증된 스킬을 만나보세요.",
+
+    // Diagram labels
+    "about.diagram.user": "User",
+    "about.diagram.ai": "AI",
+    "about.diagram.skill": "문서 작성 스킬",
+    "about.diagram.request": "이번 분기 보고서 작성해줘.",
+    "about.diagram.skillRef": "문서 작성 스킬을 참고해야지",
+    "about.diagram.result.simple": "긴 설명 없이 완벽한 결과물",
+    "about.diagram.result.unified": "매번 통일하고 정확한 문서 형식",
+    "about.diagram.result.tracking": "매번 다른 결과물",
+    "about.diagram.result.different": "사내 형식에 맞지 않은 문서",
+    "about.diagram.result.history": "문서 편집 기록 부재",
 
     // Guide Page
     "guide.hero.title": "ClaudeHub 사용 방법",
@@ -399,32 +433,66 @@ const translations: Record<Language, Record<string, string>> = {
     "discover.moreSkills.subtitle":
       "Explore other skills that might interest you",
 
-    // About Page
-    "about.hero.title": "What's ClaudeHub?",
-    "about.hero.subtitle": "Your Gateway to AI-Powered Productivity Tools",
-    "about.intro.title": "A Revolutionary Approach to AI Development",
-    "about.intro.p1":
-      "ClaudeHub is an innovative platform that combines the power of Claude AI with a comprehensive library of pre-built capabilities. Instead of starting from scratch every time, developers get instant access to proven solutions for both common and complex tasks.",
-    "about.intro.p2":
-      "Think of it as an app store for AI capabilities. Each skill is carefully crafted, documented, and maintained by our community of expert developers. Whether you need code generation, art creation, data analysis, or workflow automation, there's a skill ready to help.",
-    "about.feature1.title": "Extensible Platform",
-    "about.feature1.description":
-      "ClaudeHub is a curated marketplace of AI-powered capabilities that extend Claude Code's functionality. Each skill is a pre-built module designed to solve specific tasks.",
-    "about.feature2.title": "Community-Driven",
-    "about.feature2.description":
-      "Built by developers, for developers. Our community contributes skills ranging from code generation to creative tools, all rigorously tested and documented.",
-    "about.feature3.title": "AI-Enhanced Workflows",
-    "about.feature3.description":
-      "Harness the power of Claude AI through specialized skills that understand context, generate intelligent solutions, and adapt to your unique needs.",
-    "about.howItWorks.title": "How It Works",
-    "about.howItWorks.step1":
-      "Browse the Library: Explore our curated collection of skills, organized by category from development tools to creative applications.",
-    "about.howItWorks.step2":
-      "Install with One Command: Each skill comes with a simple install command that integrates seamlessly with Claude Code.",
-    "about.howItWorks.step3":
-      "Start Creating: Once installed, skills are immediately available. No configuration needed - just start using them in your projects.",
-    "about.howItWorks.step4":
-      "Share & Contribute: Found a skill helpful? Contribute your own or help improve existing ones through our open-source community.",
+    // About Page - What is Claude Skill
+    "about.hero.title": "What is Claude Skill?",
+    "about.hero.subtitle": "Tools that AI can use",
+
+    "about.whatIs.title": "What is Claude Skill?",
+    "about.whatIs.subtitle": "Tools that AI can use",
+    "about.whatIs.description": "Claude Skills are expert knowledge packages that extend Claude AI's capabilities for specific tasks.",
+    "about.whatIs.analogy": "Just like installing apps on your smartphone, adding skills to Claude enables more professional and accurate task execution.",
+
+    "about.why.title": "Why do we need Claude Skills?",
+    "about.why.intro": "Claude is smart by default, but specific tasks require detailed guidelines. For example,",
+    "about.why.example1": "Creating Word documents: What format should be used? Which fonts? Margins? Tone?",
+    "about.why.example2": "Making presentations: How should slide layouts be structured? Where should the company logo go?",
+    "about.why.example3": "Working with spreadsheets: How to handle formulas, and organize data?",
+    "about.why.conclusion": "Claude Skills are manuals containing expert know-how and best practices. Claude reads the skill and performs tasks like an expert in that field.",
+
+    "about.example.title": "Real Example",
+    "about.example.intro": "Let's take a document writing skill as an example.",
+    "about.example.withoutSkill": "Without a skill, Claude can only create basic Word documents. But with a document writing skill,",
+    "about.example.feature1": "Apply professional formatting and styles",
+    "about.example.feature2": "Auto-generate table of contents and page numbers",
+    "about.example.feature3": "Proper placement of tables and images",
+    "about.example.feature4": "Track document editing history",
+    "about.example.conclusion": "All of this can be handled with high quality and accuracy.",
+    "about.example.before": "Before",
+    "about.example.after": "With Claude Skills",
+
+    "about.create.title": "Anyone can create skills",
+    "about.create.subtitle": "Claude Skills are manuals on how to do the work.",
+    "about.create.description": "The greatest advantage of Claude Skills is that anyone can create them. If you're an expert in a specific field, you can turn your knowledge into a skill and share it with others. Designers, marketers, teachers, researchers - everyone can create skills with their expertise.",
+
+    "about.hub.title": "Problems Claude Hub Solves",
+    "about.hub.problem": "As Claude Skills multiply, it becomes difficult to know which skills are good and trustworthy. Using unverified skills may not give you the results you want, or may even make your work more complicated.",
+    "about.hub.solution": "Claude Hub is different",
+    "about.hub.description": "Claude Hub is a verified skill library built together by the community.",
+
+    "about.hub.feature1.title": "Reliability Verification",
+    "about.hub.feature1.description": "Through user reviews and ratings, only skills that actually work well are recommended. You can check real reviews from people who have used them.",
+    "about.hub.feature2.title": "Systematic Classification",
+    "about.hub.feature2.description": "Skills are easy to find by purpose - for work, creation, learning, etc. You can discover the skills you need with just a few clicks.",
+    "about.hub.feature3.title": "Community Wisdom",
+    "about.hub.feature3.description": "Various users share skills, exchange improvement ideas, and create better skills together. You might learn usage methods you couldn't have thought of alone.",
+    "about.hub.feature4.title": "Practical Usage Guide",
+    "about.hub.feature4.description": "Not just providing skills, but also detailed and friendly guides on how to use them and in what situations they're useful.",
+
+    "about.forEveryone.title": "A Skill Hub for Everyone",
+    "about.forEveryone.description": "Claude Hub is a space not only for developers but also for general users. We help you find the skills you need and make the most of Claude's capabilities without complex technical knowledge.",
+    "about.forEveryone.cta": "Want to work smarter with Claude in the AI era? Meet verified skills at Claude Hub.",
+
+    // Diagram labels
+    "about.diagram.user": "User",
+    "about.diagram.ai": "AI",
+    "about.diagram.skill": "Document Writing Skill",
+    "about.diagram.request": "Write quarterly report.",
+    "about.diagram.skillRef": "Let me check the document writing skill",
+    "about.diagram.result.simple": "Perfect results without lengthy explanations",
+    "about.diagram.result.unified": "Consistent and accurate document format every time",
+    "about.diagram.result.tracking": "Different results every time",
+    "about.diagram.result.different": "Documents that don't match company format",
+    "about.diagram.result.history": "No document editing history",
 
     // Guide Page
     "guide.hero.title": "How to Use ClaudeHub",
