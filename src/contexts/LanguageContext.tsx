@@ -24,10 +24,10 @@ export const useLanguage = () => {
 const translations: Record<Language, Record<string, string>> = {
   ko: {
     // Header
-    'header.logo': 'Ralo Skills',
+    'header.logo': 'ClaudeHub',
     'header.dashboard': '대시보드',
     'header.explore': '탐색',
-    'header.skills': '스킬',
+    'header.skills': '발견',
     'header.categories': '카테고리',
     'header.submit': '제출',
     'header.search.placeholder': '이름, 설명 또는 태그로 스킬 검색...',
@@ -37,7 +37,7 @@ const translations: Record<Language, Record<string, string>> = {
     'header.search.featured': '추천',
 
     // Home
-    'home.title': 'Ralo Skills',
+    'home.title': 'ClaudeHub',
     'home.subtitle': '강력한 AI 스킬을 발견하고 공유하세요',
     'home.featured': '추천 스킬',
     'home.latest': '최신 스킬',
@@ -45,7 +45,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Dashboard
     'dashboard.title': '대시보드',
-    'dashboard.subtitle': 'Ralo Skills Hub 개요',
+    'dashboard.subtitle': 'ClaudeHub Hub 개요',
     'dashboard.totalSkills': '전체 스킬',
     'dashboard.featured': '추천',
     'dashboard.totalDownloads': '전체 다운로드',
@@ -79,6 +79,7 @@ const translations: Record<Language, Record<string, string>> = {
     'skills.subtitle': '{count}개의 AI 스킬 전체 컬렉션 탐색',
     'skills.sortBy': '정렬:',
     'skills.mostPopular': '인기순',
+    'skills.mostViewed': '조회순',
     'skills.name': '이름순',
     'skills.category': '카테고리순',
     'skills.view': '보기:',
@@ -183,7 +184,7 @@ const translations: Record<Language, Record<string, string>> = {
     'common.close': '닫기',
 
     // Feature Boxes
-    'features.whatIs.title': 'Ralo Skills란?',
+    'features.whatIs.title': 'ClaudeHub란?',
     'features.whatIs.description': 'Claude Code로 생산성과 창의성을 향상시키도록 설계된 AI 기반 스킬의 큐레이션된 컬렉션입니다.',
     'features.howToUse.title': '사용 방법',
     'features.howToUse.description': '스킬을 탐색하고, 설치 명령을 복사한 다음, Claude Code 환경에서 실행하여 시작하세요.',
@@ -197,13 +198,13 @@ const translations: Record<Language, Record<string, string>> = {
     'discover.moreSkills.subtitle': '관심을 가질 만한 다른 스킬 탐색',
 
     // About Page
-    'about.hero.title': 'Ralo Skills란?',
+    'about.hero.title': 'ClaudeHub란?',
     'about.hero.subtitle': 'AI 기반 생산성 도구로 가는 관문',
     'about.intro.title': 'AI 개발에 대한 혁신적인 접근',
-    'about.intro.p1': 'Ralo Skills는 Claude AI의 힘과 사전 구축된 기능의 포괄적인 라이브러리를 결합한 혁신적인 플랫폼입니다. 매번 처음부터 시작하는 대신 개발자는 일반적이고 복잡한 작업 모두에 대한 검증된 솔루션에 즉시 액세스할 수 있습니다.',
+    'about.intro.p1': 'ClaudeHub는 Claude AI의 힘과 사전 구축된 기능의 포괄적인 라이브러리를 결합한 혁신적인 플랫폼입니다. 매번 처음부터 시작하는 대신 개발자는 일반적이고 복잡한 작업 모두에 대한 검증된 솔루션에 즉시 액세스할 수 있습니다.',
     'about.intro.p2': 'AI 기능을 위한 앱 스토어로 생각하세요. 각 스킬은 우리의 전문 개발자 커뮤니티에 의해 신중하게 제작, 문서화 및 유지 관리됩니다. 코드 생성, 아트 창작, 데이터 분석 또는 워크플로 자동화가 필요하든 도움이 될 스킬이 준비되어 있습니다.',
     'about.feature1.title': '확장 가능한 플랫폼',
-    'about.feature1.description': 'Ralo Skills는 Claude Code 기능을 확장하는 AI 기반 기능의 큐레이션된 마켓플레이스입니다. 각 스킬은 특정 작업을 해결하도록 설계된 사전 구축 모듈입니다.',
+    'about.feature1.description': 'ClaudeHub는 Claude Code 기능을 확장하는 AI 기반 기능의 큐레이션된 마켓플레이스입니다. 각 스킬은 특정 작업을 해결하도록 설계된 사전 구축 모듈입니다.',
     'about.feature2.title': '커뮤니티 주도',
     'about.feature2.description': '개발자에 의해, 개발자를 위해 구축되었습니다. 우리 커뮤니티는 코드 생성부터 창의적인 도구에 이르기까지 모두 엄격하게 테스트되고 문서화된 스킬을 기여합니다.',
     'about.feature3.title': 'AI 향상 워크플로',
@@ -215,10 +216,10 @@ const translations: Record<Language, Record<string, string>> = {
     'about.howItWorks.step4': '공유 및 기여: 스킬이 도움이 되었나요? 자신만의 스킬을 기여하거나 오픈 소스 커뮤니티를 통해 기존 스킬을 개선하는 데 도움을 주세요.',
 
     // Guide Page
-    'guide.hero.title': 'Ralo Skills 사용 방법',
+    'guide.hero.title': 'ClaudeHub 사용 방법',
     'guide.hero.subtitle': '간단한 설치 과정으로 몇 분 안에 시작하세요',
     'guide.intro.title': '시작하기 쉽습니다',
-    'guide.intro.subtitle': '다음 간단한 단계를 따라 프로젝트에서 Ralo Skills 사용을 시작하세요. 복잡한 설정이나 구성이 필요 없습니다. 설치하고 사용하세요!',
+    'guide.intro.subtitle': '다음 간단한 단계를 따라 프로젝트에서 ClaudeHub 사용을 시작하세요. 복잡한 설정이나 구성이 필요 없습니다. 설치하고 사용하세요!',
     'guide.step1.title': '스킬 찾기',
     'guide.step1.description': '조직된 카테고리를 탐색하거나 검색 바를 사용하여 필요에 맞는 스킬을 찾으세요. 각 스킬에는 자세한 문서와 예제가 함께 제공됩니다.',
     'guide.step1.tip1': '필터를 사용하여 결과 좁히기',
@@ -246,10 +247,10 @@ const translations: Record<Language, Record<string, string>> = {
     'guide.proTips.tip4': '여러 스킬을 결합하여 강력한 워크플로 만들기',
 
     // Benefits Page
-    'benefits.hero.title': '왜 Ralo Skills를 선택하나요?',
+    'benefits.hero.title': '왜 ClaudeHub를 선택하나요?',
     'benefits.hero.subtitle': '검증되고 커뮤니티 기반 솔루션으로 개발 가속화',
     'benefits.intro.title': '현대 개발자를 위한 현명한 선택',
-    'benefits.intro.subtitle': '오늘날의 빠른 속도의 개발 세계에서 효율성이 전부입니다. Ralo Skills는 수천 명의 개발자의 집단적 지혜를 활용하여 더 나은, 더 빠른, 더 스마트한 빌드를 가능하게 합니다.',
+    'benefits.intro.subtitle': '오늘날의 빠른 속도의 개발 세계에서 효율성이 전부입니다. ClaudeHub는 수천 명의 개발자의 집단적 지혜를 활용하여 더 나은, 더 빠른, 더 스마트한 빌드를 가능하게 합니다.',
     'benefits.benefit1.title': '개발 시간 절약',
     'benefits.benefit1.description': '보일러플레이트를 건너뛰고 중요한 것에 집중하세요. 사전 구축된 스킬은 몇 시간의 설정과 구성을 제거하여 더 빠르게 기능을 제공할 수 있게 합니다.',
     'benefits.benefit1.stat': '80% 더 빠른',
@@ -259,7 +260,7 @@ const translations: Record<Language, Record<string, string>> = {
     'benefits.benefit2.stat': '100%',
     'benefits.benefit2.statLabel': '코드 검토됨',
     'benefits.benefit3.title': '강력한 커뮤니티',
-    'benefits.benefit3.description': 'Ralo Skills로 빌드하는 수천 명의 개발자와 함께하세요. 지원을 받고, 지식을 공유하고, 성장하는 생태계에 기여하세요.',
+    'benefits.benefit3.description': 'ClaudeHub로 빌드하는 수천 명의 개발자와 함께하세요. 지원을 받고, 지식을 공유하고, 성장하는 생태계에 기여하세요.',
     'benefits.benefit3.stat': '10K+',
     'benefits.benefit3.statLabel': '활성 개발자',
     'benefits.benefit4.title': '안전하고 신뢰할 수 있음',
@@ -275,7 +276,7 @@ const translations: Record<Language, Record<string, string>> = {
     'benefits.benefit6.stat': '50+',
     'benefits.benefit6.statLabel': '월별 새 스킬',
     'benefits.testimonials.title': '전 세계 개발자가 사랑합니다',
-    'benefits.testimonial1.quote': 'Ralo Skills는 Claude로 빌드하는 방식을 변화시켰습니다. 며칠이 걸리던 일이 이제는 몇 시간이면 됩니다.',
+    'benefits.testimonial1.quote': 'ClaudeHub는 Claude로 빌드하는 방식을 변화시켰습니다. 며칠이 걸리던 일이 이제는 몇 시간이면 됩니다.',
     'benefits.testimonial1.author': 'Sarah Chen',
     'benefits.testimonial1.role': '시니어 개발자',
     'benefits.testimonial2.quote': '품질과 문서가 뛰어납니다. 프로덕션에서 이러한 스킬을 신뢰할 수 있습니다.',
@@ -303,10 +304,10 @@ const translations: Record<Language, Record<string, string>> = {
   },
   en: {
     // Header
-    'header.logo': 'Ralo Skills',
+    'header.logo': 'ClaudeHub',
     'header.dashboard': 'Dashboard',
     'header.explore': 'Explore',
-    'header.skills': 'Skills',
+    'header.skills': 'Discover',
     'header.categories': 'Categories',
     'header.submit': 'Submit',
     'header.search.placeholder': 'Search skills by name, description, or tags...',
@@ -316,7 +317,7 @@ const translations: Record<Language, Record<string, string>> = {
     'header.search.featured': 'Featured',
 
     // Home
-    'home.title': 'Ralo Skills',
+    'home.title': 'ClaudeHub',
     'home.subtitle': 'Discover and share powerful AI skills',
     'home.featured': 'Featured Skills',
     'home.latest': 'Latest Skills',
@@ -324,7 +325,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Dashboard
     'dashboard.title': 'Dashboard',
-    'dashboard.subtitle': 'Overview of Ralo Skills Hub',
+    'dashboard.subtitle': 'Overview of ClaudeHub Hub',
     'dashboard.totalSkills': 'Total Skills',
     'dashboard.featured': 'Featured',
     'dashboard.totalDownloads': 'Total Downloads',
@@ -358,6 +359,7 @@ const translations: Record<Language, Record<string, string>> = {
     'skills.subtitle': 'Browse the complete collection of {count} AI skills',
     'skills.sortBy': 'Sort by:',
     'skills.mostPopular': 'Most Popular',
+    'skills.mostViewed': 'Most Viewed',
     'skills.name': 'Name',
     'skills.category': 'Category',
     'skills.view': 'View:',
@@ -462,7 +464,7 @@ const translations: Record<Language, Record<string, string>> = {
     'common.close': 'Close',
 
     // Feature Boxes
-    'features.whatIs.title': 'What\'s Ralo Skills',
+    'features.whatIs.title': 'What\'s ClaudeHub',
     'features.whatIs.description': 'A curated collection of AI-powered skills designed to enhance your productivity and creativity with Claude Code.',
     'features.howToUse.title': 'How to Use It',
     'features.howToUse.description': 'Browse skills, copy the install command, and run it in your Claude Code environment to get started.',
@@ -476,13 +478,13 @@ const translations: Record<Language, Record<string, string>> = {
     'discover.moreSkills.subtitle': 'Explore other skills that might interest you',
 
     // About Page
-    'about.hero.title': 'What\'s Ralo Skills?',
+    'about.hero.title': 'What\'s ClaudeHub?',
     'about.hero.subtitle': 'Your Gateway to AI-Powered Productivity Tools',
     'about.intro.title': 'A Revolutionary Approach to AI Development',
-    'about.intro.p1': 'Ralo Skills is an innovative platform that combines the power of Claude AI with a comprehensive library of pre-built capabilities. Instead of starting from scratch every time, developers get instant access to proven solutions for both common and complex tasks.',
+    'about.intro.p1': 'ClaudeHub is an innovative platform that combines the power of Claude AI with a comprehensive library of pre-built capabilities. Instead of starting from scratch every time, developers get instant access to proven solutions for both common and complex tasks.',
     'about.intro.p2': 'Think of it as an app store for AI capabilities. Each skill is carefully crafted, documented, and maintained by our community of expert developers. Whether you need code generation, art creation, data analysis, or workflow automation, there\'s a skill ready to help.',
     'about.feature1.title': 'Extensible Platform',
-    'about.feature1.description': 'Ralo Skills is a curated marketplace of AI-powered capabilities that extend Claude Code\'s functionality. Each skill is a pre-built module designed to solve specific tasks.',
+    'about.feature1.description': 'ClaudeHub is a curated marketplace of AI-powered capabilities that extend Claude Code\'s functionality. Each skill is a pre-built module designed to solve specific tasks.',
     'about.feature2.title': 'Community-Driven',
     'about.feature2.description': 'Built by developers, for developers. Our community contributes skills ranging from code generation to creative tools, all rigorously tested and documented.',
     'about.feature3.title': 'AI-Enhanced Workflows',
@@ -494,10 +496,10 @@ const translations: Record<Language, Record<string, string>> = {
     'about.howItWorks.step4': 'Share & Contribute: Found a skill helpful? Contribute your own or help improve existing ones through our open-source community.',
 
     // Guide Page
-    'guide.hero.title': 'How to Use Ralo Skills',
+    'guide.hero.title': 'How to Use ClaudeHub',
     'guide.hero.subtitle': 'Get started in minutes with our simple installation process',
     'guide.intro.title': 'Getting Started is Easy',
-    'guide.intro.subtitle': 'Follow these simple steps to start using Ralo Skills in your projects. No complex setup or configuration required - just install and use!',
+    'guide.intro.subtitle': 'Follow these simple steps to start using ClaudeHub in your projects. No complex setup or configuration required - just install and use!',
     'guide.step1.title': 'Find a Skill',
     'guide.step1.description': 'Browse through our organized categories or use the search bar to find the perfect skill for your needs. Each skill comes with detailed documentation and examples.',
     'guide.step1.tip1': 'Use filters to narrow down results',
@@ -525,10 +527,10 @@ const translations: Record<Language, Record<string, string>> = {
     'guide.proTips.tip4': 'Combine multiple skills to create powerful workflows',
 
     // Benefits Page
-    'benefits.hero.title': 'Why Choose Ralo Skills?',
+    'benefits.hero.title': 'Why Choose ClaudeHub?',
     'benefits.hero.subtitle': 'Accelerate your development with proven, community-driven solutions',
     'benefits.intro.title': 'The Smart Choice for Modern Developers',
-    'benefits.intro.subtitle': 'In today\'s fast-paced development world, efficiency is everything. Ralo Skills harnesses the collective wisdom of thousands of developers to help you build better, faster, and smarter.',
+    'benefits.intro.subtitle': 'In today\'s fast-paced development world, efficiency is everything. ClaudeHub harnesses the collective wisdom of thousands of developers to help you build better, faster, and smarter.',
     'benefits.benefit1.title': 'Save Development Time',
     'benefits.benefit1.description': 'Skip the boilerplate and focus on what matters. Pre-built skills eliminate hours of setup and configuration, letting you deliver features faster.',
     'benefits.benefit1.stat': '80% Faster',
@@ -538,7 +540,7 @@ const translations: Record<Language, Record<string, string>> = {
     'benefits.benefit2.stat': '100%',
     'benefits.benefit2.statLabel': 'Code Reviewed',
     'benefits.benefit3.title': 'Powerful Community',
-    'benefits.benefit3.description': 'Join thousands of developers building with Ralo Skills. Get support, share knowledge, and contribute to a growing ecosystem.',
+    'benefits.benefit3.description': 'Join thousands of developers building with ClaudeHub. Get support, share knowledge, and contribute to a growing ecosystem.',
     'benefits.benefit3.stat': '10K+',
     'benefits.benefit3.statLabel': 'Active Developers',
     'benefits.benefit4.title': 'Secure & Reliable',
@@ -554,7 +556,7 @@ const translations: Record<Language, Record<string, string>> = {
     'benefits.benefit6.stat': '50+',
     'benefits.benefit6.statLabel': 'New Skills Monthly',
     'benefits.testimonials.title': 'Loved by Developers Worldwide',
-    'benefits.testimonial1.quote': 'Ralo Skills transformed how I build with Claude. What used to take days now takes hours.',
+    'benefits.testimonial1.quote': 'ClaudeHub transformed how I build with Claude. What used to take days now takes hours.',
     'benefits.testimonial1.author': 'Sarah Chen',
     'benefits.testimonial1.role': 'Senior Developer',
     'benefits.testimonial2.quote': 'The quality and documentation are outstanding. I trust these skills in production.',

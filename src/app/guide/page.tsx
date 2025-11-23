@@ -6,6 +6,7 @@ import { Footer } from '@/components/Layout/Footer';
 import { ScrollToTopFab } from '@/components/Layout/ScrollToTopFab';
 import { HeroBanner } from '@/components/Layout/HeroBanner';
 import { DiscoverSection } from '@/components/Layout/DiscoverSection';
+import { PageNavigation } from '@/components/Layout/PageNavigation';
 import { motion } from 'framer-motion';
 import {
   Search as SearchIcon,
@@ -221,6 +222,18 @@ export default function GuidePage() {
           </motion.div>
         </motion.div>
       </Container>
+
+      {/* Page Navigation */}
+      <PageNavigation
+        prevPage={{
+          href: '/about',
+          label: t('features.whatIs.title'),
+        }}
+        nextPage={{
+          href: '/benefits',
+          label: t('features.whyUse.title'),
+        }}
+      />
 
       {/* Discover Section */}
       <DiscoverSection />

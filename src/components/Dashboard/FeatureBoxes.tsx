@@ -13,10 +13,7 @@ import {
 
 export const FeatureBoxes: React.FC = () => {
   const theme = useTheme();
-  const { t, language } = useLanguage();
-
-  // Check if we should show 랄로 theme (Korean + Dark mode only)
-  const showRaloTheme = language === 'ko' && theme.palette.mode === 'dark';
+  const { t } = useLanguage();
 
   const features = [
     {
@@ -25,7 +22,6 @@ export const FeatureBoxes: React.FC = () => {
       icon: <LightbulbIcon sx={{ fontSize: 48 }} />,
       gradient: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
       href: '/about',
-      raloImage: '/ralo-surprised.png',
     },
     {
       title: t('features.howToUse.title'),
@@ -33,7 +29,6 @@ export const FeatureBoxes: React.FC = () => {
       icon: <SchoolIcon sx={{ fontSize: 48 }} />,
       gradient: 'linear-gradient(135deg, #FFB84D 0%, #6BCF7F 100%)',
       href: '/guide',
-      raloImage: '/ralo-heart.webp',
     },
     {
       title: t('features.whyUse.title'),
@@ -41,7 +36,6 @@ export const FeatureBoxes: React.FC = () => {
       icon: <RocketIcon sx={{ fontSize: 48 }} />,
       gradient: 'linear-gradient(135deg, #6BCF7F 0%, #FF85A6 100%)',
       href: '/benefits',
-      raloImage: '/ralo-surprised.png',
     },
   ];
 
@@ -94,27 +88,6 @@ export const FeatureBoxes: React.FC = () => {
                   },
                 }}
               >
-              {/* 랄로 Blurred Background Image (Korean + Dark mode only) */}
-              {showRaloTheme && (
-                <Box
-                  component="img"
-                  src={feature.raloImage}
-                  alt="랄로"
-                  sx={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    top: 0,
-                    left: 0,
-                    opacity: 0.15,
-                    pointerEvents: 'none',
-                    filter: 'blur(8px) brightness(0.8)',
-                    transition: 'all 0.3s ease',
-                  }}
-                />
-              )}
-
               {/* Background gradient on hover */}
               <Box
                 sx={{
@@ -123,9 +96,7 @@ export const FeatureBoxes: React.FC = () => {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  background: showRaloTheme
-                    ? 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)'
-                    : feature.gradient,
+                  background: feature.gradient,
                   opacity: 0,
                   transition: 'opacity 0.3s ease',
                   '.MuiPaper-root:hover &': {

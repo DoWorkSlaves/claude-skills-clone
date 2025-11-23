@@ -6,6 +6,7 @@ import { Footer } from '@/components/Layout/Footer';
 import { ScrollToTopFab } from '@/components/Layout/ScrollToTopFab';
 import { HeroBanner } from '@/components/Layout/HeroBanner';
 import { DiscoverSection } from '@/components/Layout/DiscoverSection';
+import { PageNavigation } from '@/components/Layout/PageNavigation';
 import { motion } from 'framer-motion';
 import {
   Speed as SpeedIcon,
@@ -286,6 +287,14 @@ export default function BenefitsPage() {
           </motion.div>
         </motion.div>
       </Container>
+
+      {/* Page Navigation */}
+      <PageNavigation
+        prevPage={{
+          href: '/guide',
+          label: t('features.howToUse.title'),
+        }}
+      />
 
       {/* Discover Section */}
       <DiscoverSection />

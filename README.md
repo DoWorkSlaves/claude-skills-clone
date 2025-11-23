@@ -1,4 +1,4 @@
-# Ralo Skills
+# ClaudeHub
 
 A modern, responsive AI skills hub inspired by claudeskills.info, built with NextJS, Material UI, and design tokens.
 

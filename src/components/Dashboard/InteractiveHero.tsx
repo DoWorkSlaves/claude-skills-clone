@@ -7,13 +7,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 export const InteractiveHero: React.FC = () => {
   const theme = useTheme();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-
-  // Check if we should show 랄로 theme (Korean + Dark mode only)
-  const showRaloTheme = language === 'ko' && theme.palette.mode === 'dark';
 
   // Scroll animation setup
   const { scrollY } = useScroll();
@@ -81,271 +78,60 @@ export const InteractiveHero: React.FC = () => {
           }}
         />
 
-        {/* Conditional: 랄로 GIFs (Korean + Dark Mode) OR Gradient Orbs (Default) */}
-        {showRaloTheme ? (
-          <>
-            {/* GIF 1 - Top Right - Eating/Looking - DRAGGABLE */}
-            <motion.img
-              src="/1.gif"
-              alt="랄로"
-              drag
-              dragConstraints={containerRef}
-              dragElastic={0.1}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
-              whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
-              whileHover={{ scale: 1.05, cursor: 'grab' }}
-              animate={{
-                x: [0, 20, 0],
-                y: [0, -25, 0],
-                rotate: [0, 3, 0],
-              }}
-              transition={{
-                duration: 7,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                position: 'absolute',
-                width: '200px',
-                height: 'auto',
-                top: '5%',
-                right: '3%',
-                opacity: 0.65,
-                pointerEvents: 'auto',
-                borderRadius: '16px',
-                filter: 'drop-shadow(0 0 30px rgba(34, 197, 94, 0.4))',
-                cursor: 'grab',
-              }}
-            />
+        {/* Gradient Orbs */}
+        <motion.div
+          animate={{
+            x: [0, 30, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          style={{
+            position: 'absolute',
+            width: '500px',
+            height: '500px',
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${
+              theme.palette.mode === 'dark'
+                ? 'rgba(255, 196, 109, 0.1)'
+                : 'rgba(255, 184, 77, 0.15)'
+            } 0%, transparent 70%)`,
+            top: '10%',
+            right: '10%',
+            filter: 'blur(60px)',
+            pointerEvents: 'none',
+          }}
+        />
 
-            {/* GIF 2 - Top Left - "성공의 반대는?" with text - DRAGGABLE */}
-            <motion.img
-              src="/2.gif"
-              alt="랄로"
-              drag
-              dragConstraints={containerRef}
-              dragElastic={0.1}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
-              whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
-              whileHover={{ scale: 1.05, cursor: 'grab' }}
-              animate={{
-                x: [0, -20, 0],
-                y: [0, -15, 0],
-                scale: [1, 1.03, 1],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                position: 'absolute',
-                width: '220px',
-                height: 'auto',
-                top: '8%',
-                left: '2%',
-                opacity: 0.7,
-                pointerEvents: 'auto',
-                borderRadius: '16px',
-                filter: 'drop-shadow(0 0 35px rgba(34, 197, 94, 0.45))',
-                cursor: 'grab',
-              }}
-            />
-
-            {/* GIF 3 - Middle Left - "웃어라" Smile - DRAGGABLE */}
-            <motion.img
-              src="/3.gif"
-              alt="랄로"
-              drag
-              dragConstraints={containerRef}
-              dragElastic={0.1}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
-              whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
-              whileHover={{ scale: 1.05, cursor: 'grab' }}
-              animate={{
-                x: [0, -15, 0],
-                y: [0, 20, 0],
-                rotate: [0, -2, 0],
-              }}
-              transition={{
-                duration: 6.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                position: 'absolute',
-                width: '180px',
-                height: 'auto',
-                top: '45%',
-                left: '5%',
-                opacity: 0.6,
-                pointerEvents: 'auto',
-                borderRadius: '14px',
-                filter: 'drop-shadow(0 0 25px rgba(34, 197, 94, 0.35))',
-                cursor: 'grab',
-              }}
-            />
-
-            {/* GIF 4 - Bottom Left - Shocked expression (small) - DRAGGABLE */}
-            <motion.img
-              src="/4.gif"
-              alt="랄로"
-              drag
-              dragConstraints={containerRef}
-              dragElastic={0.1}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
-              whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
-              whileHover={{ scale: 1.05, cursor: 'grab' }}
-              animate={{
-                x: [0, -18, 0],
-                y: [0, 22, 0],
-                scale: [1, 1.05, 1],
-              }}
-              transition={{
-                duration: 5.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                position: 'absolute',
-                width: '130px',
-                height: 'auto',
-                bottom: '8%',
-                left: '8%',
-                opacity: 0.55,
-                pointerEvents: 'auto',
-                borderRadius: '12px',
-                filter: 'drop-shadow(0 0 20px rgba(34, 197, 94, 0.3))',
-                cursor: 'grab',
-              }}
-            />
-
-            {/* GIF 5 - Middle Right - Headbanging/Nodding - DRAGGABLE */}
-            <motion.img
-              src="/5.gif"
-              alt="랄로"
-              drag
-              dragConstraints={containerRef}
-              dragElastic={0.1}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
-              whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
-              whileHover={{ scale: 1.05, cursor: 'grab' }}
-              animate={{
-                x: [0, 18, 0],
-                y: [0, -18, 0],
-                rotate: [0, 4, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                position: 'absolute',
-                width: '150px',
-                height: 'auto',
-                top: '50%',
-                right: '6%',
-                opacity: 0.6,
-                pointerEvents: 'auto',
-                borderRadius: '13px',
-                filter: 'drop-shadow(0 0 22px rgba(34, 197, 94, 0.32))',
-                cursor: 'grab',
-              }}
-            />
-
-            {/* GIF 6 - Bottom Right - Checkered shirt - DRAGGABLE */}
-            <motion.img
-              src="/6.gif"
-              alt="랄로"
-              drag
-              dragConstraints={containerRef}
-              dragElastic={0.1}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
-              whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
-              whileHover={{ scale: 1.05, cursor: 'grab' }}
-              animate={{
-                x: [0, 15, 0],
-                y: [0, 20, 0],
-                scale: [1, 0.97, 1],
-              }}
-              transition={{
-                duration: 7.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                position: 'absolute',
-                width: '170px',
-                height: 'auto',
-                bottom: '12%',
-                right: '4%',
-                opacity: 0.65,
-                pointerEvents: 'auto',
-                borderRadius: '14px',
-                filter: 'drop-shadow(0 0 28px rgba(34, 197, 94, 0.38))',
-                cursor: 'grab',
-              }}
-            />
-          </>
-        ) : (
-          <>
-            {/* Default Gradient Orbs */}
-            <motion.div
-              animate={{
-                x: [0, 30, 0],
-                y: [0, -30, 0],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                position: 'absolute',
-                width: '500px',
-                height: '500px',
-                borderRadius: '50%',
-                background: `radial-gradient(circle, ${
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(255, 196, 109, 0.1)'
-                    : 'rgba(255, 184, 77, 0.15)'
-                } 0%, transparent 70%)`,
-                top: '10%',
-                right: '10%',
-                filter: 'blur(60px)',
-                pointerEvents: 'none',
-              }}
-            />
-
-            <motion.div
-              animate={{
-                x: [0, -30, 0],
-                y: [0, 30, 0],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                position: 'absolute',
-                width: '400px',
-                height: '400px',
-                borderRadius: '50%',
-                background: `radial-gradient(circle, ${
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(255, 133, 166, 0.15)'
-                    : 'rgba(255, 107, 157, 0.2)'
-                } 0%, transparent 70%)`,
-                bottom: '20%',
-                left: '10%',
-                filter: 'blur(80px)',
-                pointerEvents: 'none',
-              }}
-            />
-          </>
-        )}
+        <motion.div
+          animate={{
+            x: [0, -30, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          style={{
+            position: 'absolute',
+            width: '400px',
+            height: '400px',
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${
+              theme.palette.mode === 'dark'
+                ? 'rgba(255, 133, 166, 0.15)'
+                : 'rgba(255, 107, 157, 0.2)'
+            } 0%, transparent 70%)`,
+            bottom: '20%',
+            left: '10%',
+            filter: 'blur(80px)',
+            pointerEvents: 'none',
+          }}
+        />
 
         {/* Content */}
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
@@ -374,22 +160,18 @@ export const InteractiveHero: React.FC = () => {
                     fontWeight: 800,
                     lineHeight: 1.1,
                     mb: 3,
-                    background: showRaloTheme
-                      ? 'linear-gradient(135deg, #22c55e 0%, #84cc16 100%)'
-                      : theme.palette.mode === 'dark'
+                    background: theme.palette.mode === 'dark'
                       ? 'linear-gradient(135deg, #fff 0%, #ffd6e3 100%)'
                       : 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
-                    textShadow: showRaloTheme
-                      ? '0 0 40px rgba(34, 197, 94, 0.5)'
-                      : theme.palette.mode === 'dark'
+                    textShadow: theme.palette.mode === 'dark'
                       ? '0 0 40px rgba(255, 107, 157, 0.3)'
                       : 'none',
                   }}
                 >
-                  {showRaloTheme ? '랄로 스킬' : 'Ralo Skills'}
+                  ClaudeHub
                 </Typography>
               </motion.div>
             </motion.div>

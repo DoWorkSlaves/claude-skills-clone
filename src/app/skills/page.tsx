@@ -1,57 +1,154 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   Typography,
   Box,
+  TextField,
   ToggleButtonGroup,
   ToggleButton,
   Chip,
+  InputAdornment,
+  CircularProgress,
 } from '@mui/material';
 import {
   GridView as GridIcon,
   ViewList as ListIcon,
   Star as StarIcon,
+  Search as SearchIcon,
 } from '@mui/icons-material';
 import { Header } from '@/components/Layout/Header';
 import { SkillCard } from '@/components/SkillCard/SkillCard';
-import { skills, getAllCategories } from '@/data/skills';
+import { SkillCardSkeleton } from '@/components/Skeletons';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { getSkills, getCategories } from '@/services/supabase';
+import { SkillWithCategory, Category, getLocalizedValue } from '@/types/database';
 
-type SortOption = 'name' | 'downloads' | 'category';
+type SortOption = 'likes' | 'views' | 'name';
 type ViewMode = 'grid' | 'list';
 
 export default function SkillsPage() {
-  const { t } = useLanguage();
-  const [sortBy, setSortBy] = useState<SortOption>('downloads');
+  const { t, language } = useLanguage();
+  const [skills, setSkills] = useState<SkillWithCategory[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<SortOption>('likes');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const categories = getAllCategories();
 
-  const filteredSkills = skills.filter((skill) =>
-    selectedCategory === null || skill.categories.includes(selectedCategory)
-  );
+  // Fetch data on mount
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const [skillsData, categoriesData] = await Promise.all([
+          getSkills(),
+          getCategories(),
+          new Promise(resolve => setTimeout(resolve, 1000)), // Minimum 1s loading
+        ]);
+        setSkills(skillsData);
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
+  // Filter skills
+  const filteredSkills = skills.filter((skill) => {
+    const title = getLocalizedValue(skill.title_ko, skill.title_en, language as 'ko' | 'en');
+    const description = getLocalizedValue(skill.sub_title_ko, skill.sub_title_en, language as 'ko' | 'en');
+    const tags = skill.tags || '';
+
+    const matchesSearch =
+      searchQuery === '' ||
+      title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tags.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === null || skill.categories === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  // Sort skills
   const sortedSkills = [...filteredSkills].sort((a, b) => {
+    const titleA = getLocalizedValue(a.title_ko, a.title_en, language as 'ko' | 'en');
+    const titleB = getLocalizedValue(b.title_ko, b.title_en, language as 'ko' | 'en');
+
     switch (sortBy) {
       case 'name':
-        return a.name.localeCompare(b.name);
-      case 'downloads':
-        return (b.downloads || 0) - (a.downloads || 0);
-      case 'category':
-        return a.categories[0].localeCompare(b.categories[0]);
+        return titleA.localeCompare(titleB);
+      case 'views':
+        return (b.views_count || 0) - (a.views_count || 0);
+      case 'likes':
       default:
-        return 0;
+        return (b.likes_count || 0) - (a.likes_count || 0);
     }
   });
+
+  // Get featured skills (top 4 by likes)
+  const featuredSkills = sortedSkills
+    .filter((skill) => skill.likes_count > 0)
+    .slice(0, 4);
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <Container maxWidth="xl" sx={{ py: 4 }}>
+          {/* Page Header */}
+          <Box sx={{ mb: 6, textAlign: 'center' }}>
+            <Typography
+              variant="h3"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 700,
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+              }}
+            >
+              {t('explore.title')}
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              {t('explore.subtitle')}
+            </Typography>
+          </Box>
+
+          {/* Skills Grid Skeleton */}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+                lg: 'repeat(4, 1fr)',
+              },
+              gap: { xs: 2, sm: 3, md: 4 },
+            }}
+          >
+            {Array.from({ length: 8 }).map((_, index) => (
+              <SkillCardSkeleton key={index} />
+            ))}
+          </Box>
+        </Container>
+      </>
+    );
+  }
 
   return (
     <>
       <Header />
       <Container maxWidth="xl" sx={{ py: 4 }}>
         {/* Page Header */}
-        <Box sx={{ mb: 6 }}>
+        <Box sx={{ mb: 6, textAlign: 'center' }}>
           <Typography
             variant="h3"
             component="h1"
@@ -61,11 +158,34 @@ export default function SkillsPage() {
               fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
             }}
           >
-            {t('skills.title')}
+            {t('explore.title')}
           </Typography>
           <Typography variant="h6" color="text.secondary">
-            {t('skills.subtitle').replace('{count}', skills.length.toString())}
+            {t('explore.subtitle')}
           </Typography>
+        </Box>
+
+        {/* Search Bar */}
+        <Box sx={{ mb: 4 }}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            placeholder={t('explore.searchPlaceholder')}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 3,
+              },
+            }}
+          />
         </Box>
 
         {/* Controls */}
@@ -90,9 +210,9 @@ export default function SkillsPage() {
               onChange={(e, newSort) => newSort && setSortBy(newSort)}
               size="small"
             >
-              <ToggleButton value="downloads">{t('skills.mostPopular')}</ToggleButton>
+              <ToggleButton value="likes">{t('skills.mostPopular')}</ToggleButton>
+              <ToggleButton value="views">{t('skills.mostViewed')}</ToggleButton>
               <ToggleButton value="name">{t('skills.name')}</ToggleButton>
-              <ToggleButton value="category">{t('skills.category')}</ToggleButton>
             </ToggleButtonGroup>
           </Box>
 
@@ -120,7 +240,7 @@ export default function SkillsPage() {
         {/* Category Filter */}
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-            {t('skills.filterByCategory')}
+            {t('explore.filterByCategory')}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
             <Chip
@@ -138,10 +258,10 @@ export default function SkillsPage() {
             />
             {categories.map((category) => (
               <Chip
-                key={category}
-                label={category}
-                onClick={() => setSelectedCategory(category)}
-                color={selectedCategory === category ? 'primary' : 'default'}
+                key={category.id}
+                label={getLocalizedValue(category.category_name_ko, category.category_name_en, language as 'ko' | 'en')}
+                onClick={() => setSelectedCategory(category.id)}
+                color={selectedCategory === category.id ? 'primary' : 'default'}
                 sx={{
                   fontWeight: 500,
                   cursor: 'pointer',
@@ -156,20 +276,60 @@ export default function SkillsPage() {
         </Box>
 
         {/* Featured Skills Section */}
-        <Box sx={{ mb: 6 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
-            <StarIcon sx={{ color: '#f59e0b' }} />
-            <Typography
-              variant="h5"
-              component="h2"
+        {featuredSkills.length > 0 && !searchQuery && (
+          <Box sx={{ mb: 6 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
+              <StarIcon sx={{ color: '#f59e0b' }} />
+              <Typography
+                variant="h5"
+                component="h2"
+                sx={{
+                  fontWeight: 600,
+                  fontSize: { xs: '1.25rem', sm: '1.5rem' },
+                }}
+              >
+                {t('skills.featuredSkills')}
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                fontWeight: 600,
-                fontSize: { xs: '1.25rem', sm: '1.5rem' },
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: 'repeat(1, 1fr)',
+                  sm: viewMode === 'grid' ? 'repeat(2, 1fr)' : 'repeat(1, 1fr)',
+                  md: viewMode === 'grid' ? 'repeat(3, 1fr)' : 'repeat(1, 1fr)',
+                  lg: viewMode === 'grid' ? 'repeat(4, 1fr)' : 'repeat(1, 1fr)',
+                },
+                gap: { xs: 2, sm: 3, md: 4 },
               }}
             >
-              {t('skills.featuredSkills')}
-            </Typography>
+              {featuredSkills.map((skill) => (
+                <SkillCard key={skill.id} skill={skill} />
+              ))}
+            </Box>
           </Box>
+        )}
+
+        {/* Results Count */}
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="h5" component="h2" sx={{ fontWeight: 600, mb: 1 }}>
+            {t('skills.allSkills')}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {t('explore.showing')} {sortedSkills.length} {sortedSkills.length !== 1 ? t('explore.skills') : t('explore.skill')}
+            {selectedCategory && categories.find(c => c.id === selectedCategory) &&
+              ` ${t('explore.in')} ${getLocalizedValue(
+                categories.find(c => c.id === selectedCategory)!.category_name_ko,
+                categories.find(c => c.id === selectedCategory)!.category_name_en,
+                language as 'ko' | 'en'
+              )}`
+            }
+            {searchQuery && ` ${t('explore.matching')} "${searchQuery}"`}
+          </Typography>
+        </Box>
+
+        {/* Skills Grid/List */}
+        {sortedSkills.length > 0 ? (
           <Box
             sx={{
               display: 'grid',
@@ -180,45 +340,28 @@ export default function SkillsPage() {
                 lg: viewMode === 'grid' ? 'repeat(4, 1fr)' : 'repeat(1, 1fr)',
               },
               gap: { xs: 2, sm: 3, md: 4 },
-              mb: 6,
             }}
           >
-            {sortedSkills
-              .filter((skill) => skill.featured)
-              .map((skill) => (
-                <SkillCard key={skill.id} skill={skill} />
-              ))}
+            {sortedSkills.map((skill) => (
+              <SkillCard key={skill.id} skill={skill} />
+            ))}
           </Box>
-        </Box>
-
-        {/* Results Count */}
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="h5" component="h2" sx={{ fontWeight: 600, mb: 1 }}>
-            {t('skills.allSkills')}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {t('skills.showing')} {t('skills.skillCount').replace('{count}', sortedSkills.length.toString())}
-            {selectedCategory && ` ${t('explore.in')} ${selectedCategory}`}
-          </Typography>
-        </Box>
-
-        {/* Skills Grid/List */}
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: 'repeat(1, 1fr)',
-              sm: viewMode === 'grid' ? 'repeat(2, 1fr)' : 'repeat(1, 1fr)',
-              md: viewMode === 'grid' ? 'repeat(3, 1fr)' : 'repeat(1, 1fr)',
-              lg: viewMode === 'grid' ? 'repeat(4, 1fr)' : 'repeat(1, 1fr)',
-            },
-            gap: { xs: 2, sm: 3, md: 4 },
-          }}
-        >
-          {sortedSkills.map((skill) => (
-            <SkillCard key={skill.id} skill={skill} />
-          ))}
-        </Box>
+        ) : (
+          <Box
+            sx={{
+              textAlign: 'center',
+              py: 8,
+              px: 2,
+            }}
+          >
+            <Typography variant="h5" gutterBottom>
+              {t('explore.noResults')}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {t('explore.tryAdjusting')}
+            </Typography>
+          </Box>
+        )}
       </Container>
     </>
   );

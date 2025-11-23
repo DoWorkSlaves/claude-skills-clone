@@ -20,7 +20,6 @@ export const Footer: React.FC = () => {
       links: [
         { label: 'Skills', href: '/skills' },
         { label: 'Categories', href: '/categories' },
-        { label: 'Explore', href: '/explore' },
       ],
     },
     {
@@ -87,7 +86,7 @@ export const Footer: React.FC = () => {
                 backgroundClip: 'text',
               }}
             >
-              Ralo Skills
+              ClaudeHub
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.7 }}>
               A curated collection of AI-powered skills for Claude Code. Enhance your productivity
@@ -164,7 +163,7 @@ export const Footer: React.FC = () => {
           }}
         >
           <Typography variant="body2" color="text.secondary">
-            © {new Date().getFullYear()} Ralo Skills. All rights reserved.
+            © {new Date().getFullYear()} ClaudeHub. All rights reserved.
           </Typography>
 
           <Box sx={{ display: 'flex', gap: 3 }}>
