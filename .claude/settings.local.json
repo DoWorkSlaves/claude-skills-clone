@@ -18,7 +18,9 @@
       "Bash(git fetch:*)",
       "Bash(git push:*)",
       "Bash(git remote add:*)",
-      "WebFetch(domain:namu.wiki)"
+      "WebFetch(domain:namu.wiki)",
+      "Bash(npx tsc:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

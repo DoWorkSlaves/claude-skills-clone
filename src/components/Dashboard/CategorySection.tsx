@@ -108,7 +108,7 @@ export const CategorySections: React.FC = () => {
                   fontWeight: 700,
                   mb: 3,
                   fontSize: { xs: '1.75rem', sm: '2rem', md: '2.25rem' },
-                  background: 'linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%)',
+                  background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
