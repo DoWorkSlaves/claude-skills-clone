@@ -137,7 +137,18 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <AppBar position="sticky" color="default" elevation={0}>
+      <AppBar
+        position="sticky"
+        color="default"
+        elevation={0}
+        sx={{
+          backdropFilter: 'blur(10px)',
+          backgroundColor: mode === 'dark'
+            ? 'rgba(18, 18, 18, 0.7)'
+            : 'rgba(255, 255, 255, 0.7)',
+          borderBottom: `1px solid ${theme.palette.divider}`,
+        }}
+      >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* Logo */}
