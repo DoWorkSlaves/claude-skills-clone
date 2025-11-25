@@ -127,7 +127,8 @@ const translations: Record<Language, Record<string, string>> = {
     "inquiry.submit": "문의 보내기",
     "inquiry.cancel": "취소",
     "inquiry.close": "닫기",
-    "inquiry.success": "문의가 성공적으로 접수되었습니다. 빠른 시일 내에 답변 드리겠습니다.",
+    "inquiry.success":
+      "문의가 성공적으로 접수되었습니다. 빠른 시일 내에 답변 드리겠습니다.",
     "inquiry.error": "문의 전송 중 오류가 발생했습니다. 다시 시도해주세요.",
     "inquiry.signInRequired": "문의를 보내려면 로그인이 필요합니다.",
     "inquiry.signIn": "Google로 로그인",
@@ -160,48 +161,67 @@ const translations: Record<Language, Record<string, string>> = {
 
     "about.whatIs.title": "클로드 스킬이란?",
     "about.whatIs.subtitle": "AI가 사용 가능한 도구",
-    "about.whatIs.description": "클로드 스킬은 클로드 AI의 능력을 특정 작업에 맞게 확장하는 전문 지식 패키지에요.",
-    "about.whatIs.analogy": "마치 스마트폰에 앱을 설치하듯이, 클로드에 스킬을 추가하면 더욱 전문적이고 정확한 작업을 수행할 수 있게 돼요.",
+    "about.whatIs.description":
+      "클로드 스킬은 클로드 AI의 능력을 특정 작업에 맞게 확장하는 전문 지식 패키지에요.",
+    "about.whatIs.analogy":
+      "마치 스마트폰에 앱을 설치하듯이, 클로드에 스킬을 추가하면 더욱 전문적이고 정확한 작업을 수행할 수 있게 돼요.",
 
     "about.why.title": "왜 클로드 스킬이 필요할까요?",
-    "about.why.intro": "클로드는 기본적으로도 똑똑하지만, 특정 작업을 할 때는 세부적인 가이드라인이 필요해요. 예를 들어,",
-    "about.why.example1": "워드 문서를 만들 때: 어떤 형식으로 만들어야 할까요? 글꼴은? 여백은? 말투는?",
-    "about.why.example2": "프레젠테이션을 제작할 때: 슬라이드 레이아웃은 어떻게 구성해야 할까요? 회사 로고는 어디에 넣나요?",
-    "about.why.example3": "스프레드시트(엑셀)를 다룰 때: 수식은 어떻게 처리하고, 데이터는 어떻게 정리해야 할까요?",
-    "about.why.conclusion": "클로드 스킬은 전문가들의 노하우와 모범 사례를 담은 설명서에요. 클로드는 스킬을 읽고, 마치 그 분야의 전문가처럼 작업을 수행할 수 있어요.",
+    "about.why.intro":
+      "클로드는 기본적으로도 똑똑하지만, 특정 작업을 할 때는 세부적인 가이드라인이 필요해요. 예를 들어,",
+    "about.why.example1":
+      "워드 문서를 만들 때: 어떤 형식으로 만들어야 할까요? 글꼴은? 여백은? 말투는?",
+    "about.why.example2":
+      "프레젠테이션을 제작할 때: 슬라이드 레이아웃은 어떻게 구성해야 할까요? 회사 로고는 어디에 넣나요?",
+    "about.why.example3":
+      "스프레드시트(엑셀)를 다룰 때: 수식은 어떻게 처리하고, 데이터는 어떻게 정리해야 할까요?",
+    "about.why.conclusion":
+      "클로드 스킬은 전문가들의 노하우와 모범 사례를 담은 설명서에요. 클로드는 스킬을 읽고, 마치 그 분야의 전문가처럼 작업을 수행할 수 있어요.",
 
     "about.example.title": "실제 예시",
     "about.example.intro": "문서 작성 스킬을 예로 들어볼까요?",
-    "about.example.withoutSkill": "스킬이 없다면 클로드는 기본적인 워드 문서만 만들 수 있어요. 하지만 문서 작성 스킬을 활용한다면,",
+    "about.example.withoutSkill":
+      "스킬이 없다면 클로드는 기본적인 워드 문서만 만들 수 있어요. 하지만 문서 작성 스킬을 활용한다면,",
     "about.example.feature1": "전문적인 서식과 스타일 적용",
     "about.example.feature2": "목차와 페이지 번호 자동 생성",
     "about.example.feature3": "표와 이미지의 적절한 배치",
     "about.example.feature4": "문서 편집 기록 추적",
-    "about.example.conclusion": "이 모든 것을 높은 품질과 정확성으로 처리할 수 있습니다.",
+    "about.example.conclusion":
+      "이 모든 것을 높은 품질과 정확성으로 처리할 수 있습니다.",
     "about.example.before": "기존",
     "about.example.after": "클로드 스킬과 함께라면",
 
     "about.create.title": "누구나 스킬을 만들 수 있습니다",
-    "about.create.subtitle": "클로드 스킬은 어떻게 일을 해야 하는지에 대한 설명서에요.",
-    "about.create.description": "클로드 스킬의 가장 큰 장점은 누구나 만들 수 있다는 점입니다. 특정 분야의 전문가라면, 자신의 지식을 스킬로 만들어 다른 사람들과 공유할 수 있습니다. 디자이너, 마케터, 교사, 연구자 등 각자의 전문성을 담은 스킬을 만들 수 있어요.",
+    "about.create.subtitle":
+      "클로드 스킬은 어떻게 일을 해야 하는지에 대한 설명서에요.",
+    "about.create.description":
+      "클로드 스킬의 가장 큰 장점은 누구나 만들 수 있다는 점입니다. 특정 분야의 전문가라면, 자신의 지식을 스킬로 만들어 다른 사람들과 공유할 수 있습니다. 디자이너, 마케터, 교사, 연구자 등 각자의 전문성을 담은 스킬을 만들 수 있어요.",
 
     "about.hub.title": "클로드 허브가 해결하는 문제",
-    "about.hub.problem": "클로드 스킬이 많아지면 어떤 스킬이 좋은지, 신뢰할 수 있는지 알기 어려워져요. 검증되지 않은 스킬을 사용하면 원하는 결과를 얻지 못하거나, 오히려 작업이 더 복잡해질 수 있어요.",
+    "about.hub.problem":
+      "클로드 스킬이 많아지면 어떤 스킬이 좋은지, 신뢰할 수 있는지 알기 어려워져요. 검증되지 않은 스킬을 사용하면 원하는 결과를 얻지 못하거나, 오히려 작업이 더 복잡해질 수 있어요.",
     "about.hub.solution": "클로드 허브는 이렇게 다릅니다",
-    "about.hub.description": "클로드 허브는 커뮤니티가 함께 만드는 검증된 스킬 라이브러리에요.",
+    "about.hub.description":
+      "클로드 허브는 커뮤니티가 함께 만드는 검증된 스킬 라이브러리에요.",
 
     "about.hub.feature1.title": "신뢰성 검증",
-    "about.hub.feature1.description": "사용자들의 리뷰와 평가를 통해 실제로 잘 작동하는 스킬만 추천해요. 직접 써본 사람들의 생생한 후기를 확인할 수 있어요.",
+    "about.hub.feature1.description":
+      "사용자들의 리뷰와 평가를 통해 실제로 잘 작동하는 스킬만 추천해요. 직접 써본 사람들의 생생한 후기를 확인할 수 있어요.",
     "about.hub.feature2.title": "체계적인 분류",
-    "about.hub.feature2.description": "업무용, 창작용, 학습용 등 목적별로 스킬을 쉽게 찾을 수 있어요. 내가 필요한 스킬을 몇 번의 클릭만으로 발견할 수 있죠.",
+    "about.hub.feature2.description":
+      "업무용, 창작용, 학습용 등 목적별로 스킬을 쉽게 찾을 수 있어요. 내가 필요한 스킬을 몇 번의 클릭만으로 발견할 수 있죠.",
     "about.hub.feature3.title": "커뮤니티의 지혜",
-    "about.hub.feature3.description": "다양한 사용자들이 스킬을 공유하고, 개선 아이디어를 나누며, 함께 더 나은 스킬을 만들어가고 있어요. 혼자서는 생각하지 못했던 활용법을 배울 수도 있겠죠?",
+    "about.hub.feature3.description":
+      "다양한 사용자들이 스킬을 공유하고, 개선 아이디어를 나누며, 함께 더 나은 스킬을 만들어가고 있어요. 혼자서는 생각하지 못했던 활용법을 배울 수도 있겠죠?",
     "about.hub.feature4.title": "실전 활용 가이드",
-    "about.hub.feature4.description": "단순히 스킬만 제공하는 게 아니라, 어떻게 사용하는지, 어떤 상황에서 유용한지에 대한 상세하고 친절한 가이드도 함께 제공해요.",
+    "about.hub.feature4.description":
+      "단순히 스킬만 제공하는 게 아니라, 어떻게 사용하는지, 어떤 상황에서 유용한지에 대한 상세하고 친절한 가이드도 함께 제공해요.",
 
     "about.forEveryone.title": "모두를 위한 스킬 허브",
-    "about.forEveryone.description": "클로드 허브는 개발자뿐만 아니라, 일반 사용자를 위한 공간이에요. 복잡한 기술 지식 없이도 필요한 스킬을 찾고, 클로드의 능력을 최대한 활용할 수 있도록 도와드릴게요.",
-    "about.forEveryone.cta": "AI 시대, 클로드와 함께 더 스마트하게 일하고 싶으신가요? 클로드 허브에서 검증된 스킬을 만나보세요.",
+    "about.forEveryone.description":
+      "클로드 허브는 개발자뿐만 아니라, 일반 사용자를 위한 공간이에요. 복잡한 기술 지식 없이도 필요한 스킬을 찾고, 클로드의 능력을 최대한 활용할 수 있도록 도와드릴게요.",
+    "about.forEveryone.cta":
+      "AI 시대, 클로드와 함께 더 스마트하게 일하고 싶으신가요? 클로드 허브에서 검증된 스킬을 만나보세요.",
 
     // Diagram labels
     "about.diagram.user": "User",
@@ -216,11 +236,11 @@ const translations: Record<Language, Record<string, string>> = {
     "about.diagram.result.history": "문서 편집 기록 부재",
 
     // Guide Page
-    "guide.hero.title": "ClaudeHub 사용 방법",
-    "guide.hero.subtitle": "간단한 설치 과정으로 몇 분 안에 시작하세요",
+    "guide.hero.title": "어떻게 사용하나요?",
+    "guide.hero.subtitle": "3분 안에 바로 시작할 수 있어요",
     "guide.toggle.claudeAI": "클로드 AI",
     "guide.toggle.claudeAI.subtitle": "가장 간단함",
-    "guide.toggle.claudeAI.description": "일반적인 대중적인 클로드 AI 사용자",
+    "guide.toggle.claudeAI.description": "일반적이고 대중적인 클로드 AI 사용자",
     "guide.toggle.claudeCode": "클로드 코드",
     "guide.toggle.claudeCode.subtitle": "모든 개발자 전용",
     "guide.toggle.claudeCode.description": "클로드 코드를 사용 중인 개발자",
@@ -229,31 +249,41 @@ const translations: Record<Language, Record<string, string>> = {
     "guide.toggle.claudeAPI.description": "더 스마트한 당신의 서비스",
     "guide.toggle.claudeAgenticSDK": "클로드 Agentic SDK",
     "guide.toggle.claudeAgenticSDK.subtitle": "AI 에이전트 개발자 전용",
-    "guide.toggle.claudeAgenticSDK.description": "더 전문적인 당신의 AI 에이전트",
+    "guide.toggle.claudeAgenticSDK.description":
+      "더 전문적인 당신의 AI 에이전트",
     "guide.content.claudeAI.title": "클로드 AI 사용자",
     "guide.content.claudeAI.alert.before": "",
-    "guide.content.claudeAI.alert.after": "의 유료 사용자(Pro 이상)여야 합니다.",
+    "guide.content.claudeAI.alert.after":
+      "의 유료 사용자(Pro 이상)여야 합니다.",
     "guide.content.claudeAI.selectSkills": "스킬 선택하기",
     "guide.content.claudeAI.findSkill": "원하는 스킬을 찾았나요?",
     "guide.content.claudeAI.findSkillDesc1": "스킬 옆",
-    "guide.content.claudeAI.findSkillDesc2": "버튼을 눌러 zip 형식의 파일을 다운받아 주세요.",
+    "guide.content.claudeAI.findSkillDesc2":
+      "버튼을 눌러 zip 형식의 파일을 다운받아 주세요.",
     "guide.content.claudeAI.addSkill": "스킬을 추가하세요",
     "guide.content.claudeAI.addSkillStep1": "claude.ai에 접속해 주세요.",
-    "guide.content.claudeAI.addSkillStep2": "좌측 하단 내 프로필을 선택해주세요.",
-    "guide.content.claudeAI.addSkillStep3": "\"설정\"을 선택해주세요.",
-    "guide.content.claudeAI.addSkillStep4": "\"기능\" 탭을 선택해주세요.",
+    "guide.content.claudeAI.addSkillStep2":
+      "좌측 하단 내 프로필을 선택해주세요.",
+    "guide.content.claudeAI.addSkillStep3": '"설정"을 선택해주세요.',
+    "guide.content.claudeAI.addSkillStep4": '"기능" 탭을 선택해주세요.',
     "guide.content.claudeAI.addSkillStep5": "아래로 스크롤해주세요.",
-    "guide.content.claudeAI.addSkillStep6": "\"스킬 업로드\" 버튼을 눌러주세요.",
-    "guide.content.claudeAI.addSkillStep7": "다운로드 받았던 스킬을 추가해주세요.",
-    "guide.content.claudeAI.addSkillStep8": "이제 모든 채팅에서 클로드가 스킬을 사용할 수 있어요. 👏",
-    "guide.content.claudeAI.addSkillAlert": "추가가 되지 않나요? 이미 추가된 스킬은 추가할 수 없어요. 또, 일부 스킬(Anthropic 지원)은 기본적으로 추가되어 있어요.",
+    "guide.content.claudeAI.addSkillStep6": '"스킬 업로드" 버튼을 눌러주세요.',
+    "guide.content.claudeAI.addSkillStep7":
+      "다운로드 받았던 스킬을 추가해주세요.",
+    "guide.content.claudeAI.addSkillStep8":
+      "이제 모든 채팅에서 클로드가 스킬을 사용할 수 있어요. 👏",
+    "guide.content.claudeAI.addSkillAlert":
+      "추가가 되지 않나요? 이미 추가된 스킬은 추가할 수 없어요. 또, 일부 스킬(Anthropic 지원)은 기본적으로 추가되어 있어요.",
     "guide.content.claudeAI.faq": "FAQ",
-    "guide.content.claudeAI.faq1Q": "스킬을 자동으로 사용되나요?",
-    "guide.content.claudeAI.faq1A": "네! 클로드가 스스로 필요한 스킬을 선정하고 사용합니다. 특정 스킬을 사용하라고 명령할 수도 있어요.",
+    "guide.content.claudeAI.faq1Q": "스킬은 자동으로 사용되나요?",
+    "guide.content.claudeAI.faq1A":
+      "네! 클로드가 스스로 필요한 스킬을 선정하고 사용합니다. 특정 스킬을 사용하라고 명령할 수도 있어요.",
     "guide.content.claudeAI.faq2Q": "스킬을 사용한 게 맞는지 확인할 수 있나요?",
-    "guide.content.claudeAI.faq2A": "클로드의 답변에서 스킬 사용 여부를 확인할 수 있어요. \"~스킬\"을 사용한다는 메시지가 나와요.",
+    "guide.content.claudeAI.faq2A":
+      '클로드의 답변에서 스킬 사용 여부를 확인할 수 있어요. "~스킬"을 사용한다는 메시지가 나와요.',
     "guide.content.claudeAI.faq3Q": "추가한 스킬이 반영되지 않아요.",
-    "guide.content.claudeAI.faq3A": "스킬을 추가한 이후, \"새 채팅\"을 통해 새로운 대화를 시작해주세요. 기존 대화에서는 신규 스킬을 알 수 없을 가능성이 있어요.",
+    "guide.content.claudeAI.faq3A":
+      '스킬을 추가한 이후, "새 채팅"을 통해 새로운 대화를 시작해주세요. 기존 대화에서는 신규 스킬을 알 수 없을 가능성이 있어요.',
     "guide.content.lastEdit": "최종 수정일",
     "guide.content.requestFix": "수정 요청",
     "guide.intro.title": "시작하기 쉽습니다",
@@ -447,8 +477,10 @@ const translations: Record<Language, Record<string, string>> = {
     "inquiry.submit": "Send Inquiry",
     "inquiry.cancel": "Cancel",
     "inquiry.close": "Close",
-    "inquiry.success": "Your inquiry has been submitted successfully. We will respond shortly.",
-    "inquiry.error": "An error occurred while sending your inquiry. Please try again.",
+    "inquiry.success":
+      "Your inquiry has been submitted successfully. We will respond shortly.",
+    "inquiry.error":
+      "An error occurred while sending your inquiry. Please try again.",
     "inquiry.signInRequired": "Please sign in to send an inquiry.",
     "inquiry.signIn": "Sign in with Google",
     "inquiry.type.general": "General Inquiry",
@@ -481,48 +513,67 @@ const translations: Record<Language, Record<string, string>> = {
 
     "about.whatIs.title": "What is Claude Skill?",
     "about.whatIs.subtitle": "Tools that AI can use",
-    "about.whatIs.description": "Claude Skills are expert knowledge packages that extend Claude AI's capabilities for specific tasks.",
-    "about.whatIs.analogy": "Just like installing apps on your smartphone, adding skills to Claude enables more professional and accurate task execution.",
+    "about.whatIs.description":
+      "Claude Skills are expert knowledge packages that extend Claude AI's capabilities for specific tasks.",
+    "about.whatIs.analogy":
+      "Just like installing apps on your smartphone, adding skills to Claude enables more professional and accurate task execution.",
 
     "about.why.title": "Why do we need Claude Skills?",
-    "about.why.intro": "Claude is smart by default, but specific tasks require detailed guidelines. For example,",
-    "about.why.example1": "Creating Word documents: What format should be used? Which fonts? Margins? Tone?",
-    "about.why.example2": "Making presentations: How should slide layouts be structured? Where should the company logo go?",
-    "about.why.example3": "Working with spreadsheets: How to handle formulas, and organize data?",
-    "about.why.conclusion": "Claude Skills are manuals containing expert know-how and best practices. Claude reads the skill and performs tasks like an expert in that field.",
+    "about.why.intro":
+      "Claude is smart by default, but specific tasks require detailed guidelines. For example,",
+    "about.why.example1":
+      "Creating Word documents: What format should be used? Which fonts? Margins? Tone?",
+    "about.why.example2":
+      "Making presentations: How should slide layouts be structured? Where should the company logo go?",
+    "about.why.example3":
+      "Working with spreadsheets: How to handle formulas, and organize data?",
+    "about.why.conclusion":
+      "Claude Skills are manuals containing expert know-how and best practices. Claude reads the skill and performs tasks like an expert in that field.",
 
     "about.example.title": "Real Example",
     "about.example.intro": "Let's take a document writing skill as an example.",
-    "about.example.withoutSkill": "Without a skill, Claude can only create basic Word documents. But with a document writing skill,",
+    "about.example.withoutSkill":
+      "Without a skill, Claude can only create basic Word documents. But with a document writing skill,",
     "about.example.feature1": "Apply professional formatting and styles",
-    "about.example.feature2": "Auto-generate table of contents and page numbers",
+    "about.example.feature2":
+      "Auto-generate table of contents and page numbers",
     "about.example.feature3": "Proper placement of tables and images",
     "about.example.feature4": "Track document editing history",
-    "about.example.conclusion": "All of this can be handled with high quality and accuracy.",
+    "about.example.conclusion":
+      "All of this can be handled with high quality and accuracy.",
     "about.example.before": "Before",
     "about.example.after": "With Claude Skills",
 
     "about.create.title": "Anyone can create skills",
     "about.create.subtitle": "Claude Skills are manuals on how to do the work.",
-    "about.create.description": "The greatest advantage of Claude Skills is that anyone can create them. If you're an expert in a specific field, you can turn your knowledge into a skill and share it with others. Designers, marketers, teachers, researchers - everyone can create skills with their expertise.",
+    "about.create.description":
+      "The greatest advantage of Claude Skills is that anyone can create them. If you're an expert in a specific field, you can turn your knowledge into a skill and share it with others. Designers, marketers, teachers, researchers - everyone can create skills with their expertise.",
 
     "about.hub.title": "Problems Claude Hub Solves",
-    "about.hub.problem": "As Claude Skills multiply, it becomes difficult to know which skills are good and trustworthy. Using unverified skills may not give you the results you want, or may even make your work more complicated.",
+    "about.hub.problem":
+      "As Claude Skills multiply, it becomes difficult to know which skills are good and trustworthy. Using unverified skills may not give you the results you want, or may even make your work more complicated.",
     "about.hub.solution": "Claude Hub is different",
-    "about.hub.description": "Claude Hub is a verified skill library built together by the community.",
+    "about.hub.description":
+      "Claude Hub is a verified skill library built together by the community.",
 
     "about.hub.feature1.title": "Reliability Verification",
-    "about.hub.feature1.description": "Through user reviews and ratings, only skills that actually work well are recommended. You can check real reviews from people who have used them.",
+    "about.hub.feature1.description":
+      "Through user reviews and ratings, only skills that actually work well are recommended. You can check real reviews from people who have used them.",
     "about.hub.feature2.title": "Systematic Classification",
-    "about.hub.feature2.description": "Skills are easy to find by purpose - for work, creation, learning, etc. You can discover the skills you need with just a few clicks.",
+    "about.hub.feature2.description":
+      "Skills are easy to find by purpose - for work, creation, learning, etc. You can discover the skills you need with just a few clicks.",
     "about.hub.feature3.title": "Community Wisdom",
-    "about.hub.feature3.description": "Various users share skills, exchange improvement ideas, and create better skills together. You might learn usage methods you couldn't have thought of alone.",
+    "about.hub.feature3.description":
+      "Various users share skills, exchange improvement ideas, and create better skills together. You might learn usage methods you couldn't have thought of alone.",
     "about.hub.feature4.title": "Practical Usage Guide",
-    "about.hub.feature4.description": "Not just providing skills, but also detailed and friendly guides on how to use them and in what situations they're useful.",
+    "about.hub.feature4.description":
+      "Not just providing skills, but also detailed and friendly guides on how to use them and in what situations they're useful.",
 
     "about.forEveryone.title": "A Skill Hub for Everyone",
-    "about.forEveryone.description": "Claude Hub is a space not only for developers but also for general users. We help you find the skills you need and make the most of Claude's capabilities without complex technical knowledge.",
-    "about.forEveryone.cta": "Want to work smarter with Claude in the AI era? Meet verified skills at Claude Hub.",
+    "about.forEveryone.description":
+      "Claude Hub is a space not only for developers but also for general users. We help you find the skills you need and make the most of Claude's capabilities without complex technical knowledge.",
+    "about.forEveryone.cta":
+      "Want to work smarter with Claude in the AI era? Meet verified skills at Claude Hub.",
 
     // Diagram labels
     "about.diagram.user": "User",
@@ -530,10 +581,13 @@ const translations: Record<Language, Record<string, string>> = {
     "about.diagram.skill": "Document Writing Skill",
     "about.diagram.request": "Write quarterly report.",
     "about.diagram.skillRef": "Let me check the document writing skill",
-    "about.diagram.result.simple": "Perfect results without lengthy explanations",
-    "about.diagram.result.unified": "Consistent and accurate document format every time",
+    "about.diagram.result.simple":
+      "Perfect results without lengthy explanations",
+    "about.diagram.result.unified":
+      "Consistent and accurate document format every time",
     "about.diagram.result.tracking": "Different results every time",
-    "about.diagram.result.different": "Documents that don't match company format",
+    "about.diagram.result.different":
+      "Documents that don't match company format",
     "about.diagram.result.history": "No document editing history",
 
     // Guide Page
@@ -551,31 +605,39 @@ const translations: Record<Language, Record<string, string>> = {
     "guide.toggle.claudeAPI.description": "Make your service smarter",
     "guide.toggle.claudeAgenticSDK": "Claude Agentic SDK",
     "guide.toggle.claudeAgenticSDK.subtitle": "For AI Agent Developers",
-    "guide.toggle.claudeAgenticSDK.description": "Build more professional AI agents",
+    "guide.toggle.claudeAgenticSDK.description":
+      "Build more professional AI agents",
     "guide.content.claudeAI.title": "Claude AI User",
     "guide.content.claudeAI.alert.before": "You must be a paid user of ",
     "guide.content.claudeAI.alert.after": " (Pro or higher).",
     "guide.content.claudeAI.selectSkills": "Select Skills",
     "guide.content.claudeAI.findSkill": "Found the skill you want?",
     "guide.content.claudeAI.findSkillDesc1": "Press the",
-    "guide.content.claudeAI.findSkillDesc2": "button next to the skill to download a zip file.",
+    "guide.content.claudeAI.findSkillDesc2":
+      "button next to the skill to download a zip file.",
     "guide.content.claudeAI.addSkill": "Add the skill",
     "guide.content.claudeAI.addSkillStep1": "Go to claude.ai.",
-    "guide.content.claudeAI.addSkillStep2": "Select your profile at the bottom left.",
-    "guide.content.claudeAI.addSkillStep3": "Select \"Settings\".",
-    "guide.content.claudeAI.addSkillStep4": "Select the \"Features\" tab.",
+    "guide.content.claudeAI.addSkillStep2":
+      "Select your profile at the bottom left.",
+    "guide.content.claudeAI.addSkillStep3": 'Select "Settings".',
+    "guide.content.claudeAI.addSkillStep4": 'Select the "Features" tab.',
     "guide.content.claudeAI.addSkillStep5": "Scroll down.",
-    "guide.content.claudeAI.addSkillStep6": "Press the \"Upload Skill\" button.",
+    "guide.content.claudeAI.addSkillStep6": 'Press the "Upload Skill" button.',
     "guide.content.claudeAI.addSkillStep7": "Add the skill you downloaded.",
-    "guide.content.claudeAI.addSkillStep8": "Now Claude can use the skill in all chats. 👏",
-    "guide.content.claudeAI.addSkillAlert": "Can't add the skill? Skills that are already added cannot be added again. Also, some skills (Anthropic supported) are added by default.",
+    "guide.content.claudeAI.addSkillStep8":
+      "Now Claude can use the skill in all chats. 👏",
+    "guide.content.claudeAI.addSkillAlert":
+      "Can't add the skill? Skills that are already added cannot be added again. Also, some skills (Anthropic supported) are added by default.",
     "guide.content.claudeAI.faq": "FAQ",
     "guide.content.claudeAI.faq1Q": "Are skills used automatically?",
-    "guide.content.claudeAI.faq1A": "Yes! Claude selects and uses the necessary skills on its own. You can also command it to use a specific skill.",
+    "guide.content.claudeAI.faq1A":
+      "Yes! Claude selects and uses the necessary skills on its own. You can also command it to use a specific skill.",
     "guide.content.claudeAI.faq2Q": "Can I confirm if a skill was used?",
-    "guide.content.claudeAI.faq2A": "You can check if a skill was used in Claude's response. A message saying \"using ~skill\" will appear.",
+    "guide.content.claudeAI.faq2A":
+      'You can check if a skill was used in Claude\'s response. A message saying "using ~skill" will appear.',
     "guide.content.claudeAI.faq3Q": "The skill I added is not reflected.",
-    "guide.content.claudeAI.faq3A": "After adding a skill, please start a new conversation through \"New Chat\". Existing conversations may not recognize newly added skills.",
+    "guide.content.claudeAI.faq3A":
+      'After adding a skill, please start a new conversation through "New Chat". Existing conversations may not recognize newly added skills.',
     "guide.content.lastEdit": "Last edited",
     "guide.content.requestFix": "Request Fix",
     "guide.intro.title": "Getting Started is Easy",

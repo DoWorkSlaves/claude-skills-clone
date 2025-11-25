@@ -5,6 +5,7 @@ import { Box, Container, Typography, Paper, useTheme, ToggleButtonGroup, ToggleB
 import {
   Edit as EditIcon,
   Download as DownloadIcon,
+  HelpOutline as HelpOutlineIcon,
 } from '@mui/icons-material';
 import { Header } from '@/components/Layout/Header';
 import { Footer } from '@/components/Layout/Footer';
@@ -119,19 +120,38 @@ export default function GuidePage() {
 
           {/* Guide Type Toggle */}
           <Box sx={{ mb: 6 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                mb: 3,
+                overflowX: 'auto',
+                pb: 1,
+                '&::-webkit-scrollbar': {
+                  height: 6,
+                },
+                '&::-webkit-scrollbar-track': {
+                  backgroundColor: theme.palette.action.hover,
+                  borderRadius: 3,
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: theme.palette.primary.main,
+                  borderRadius: 3,
+                },
+              }}
+            >
               <ToggleButtonGroup
                 value={selectedGuide}
                 exclusive
                 onChange={handleGuideChange}
                 aria-label="guide type"
                 sx={{
-                  flexWrap: 'wrap',
-                  justifyContent: 'center',
+                  flexWrap: 'nowrap',
                   '& .MuiToggleButton-root': {
-                    px: { xs: 2, md: 3 },
+                    px: { xs: 1.5, sm: 2, md: 3 },
                     py: 1.5,
                     borderColor: theme.palette.divider,
+                    minWidth: { xs: 'auto', sm: 'auto' },
                     '&.Mui-selected': {
                       background: 'linear-gradient(135deg, #ff6b35 0%, #ffc857 100%)',
                       color: 'white',
@@ -208,13 +228,7 @@ export default function GuidePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <Paper
-                elevation={2}
-                sx={{
-                  p: { xs: 3, md: 4 },
-                  mb: 6,
-                }}
-              >
+              <Box sx={{ mb: 8 }}>
                 {/* Title */}
                 <Typography
                   variant="h3"
@@ -697,7 +711,7 @@ export default function GuidePage() {
                   component="h2"
                   sx={{
                     fontWeight: 700,
-                    mb: 2,
+                    mb: 3,
                     fontSize: { xs: '1.25rem', md: '1.5rem' },
                   }}
                 >
@@ -705,76 +719,191 @@ export default function GuidePage() {
                 </Typography>
 
                 {/* FAQ content */}
-                <Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {/* FAQ 1 */}
-                  <Typography
-                    variant="h6"
-                    component="h4"
+                  <Paper
+                    elevation={1}
                     sx={{
-                      fontWeight: 600,
-                      mb: 1,
-                      fontSize: { xs: '1rem', md: '1.125rem' },
+                      p: 3,
+                      borderRadius: '12px',
+                      border: `2px solid transparent`,
+                      transition: 'all 0.3s ease',
+                      background:
+                        theme.palette.mode === 'dark'
+                          ? 'rgba(255, 255, 255, 0.05)'
+                          : 'rgba(0, 0, 0, 0.02)',
+                      '&:hover': {
+                        borderColor: theme.palette.primary.main,
+                        transform: 'translateY(-4px)',
+                        boxShadow: theme.shadows[4],
+                      },
                     }}
                   >
-                    {t('guide.content.claudeAI.faq1Q')}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      mb: 3,
-                      lineHeight: 1.8,
-                      color: theme.palette.text.secondary,
-                    }}
-                  >
-                    {t('guide.content.claudeAI.faq1A')}
-                  </Typography>
+                    <Box sx={{ display: 'flex', gap: 2, mb: 1.5 }}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: 40,
+                          height: 40,
+                          borderRadius: '10px',
+                          background: `linear-gradient(135deg, ${theme.palette.primary.main}20, ${theme.palette.primary.main}40)`,
+                          color: theme.palette.primary.main,
+                          flexShrink: 0,
+                        }}
+                      >
+                        <HelpOutlineIcon sx={{ fontSize: 24 }} />
+                      </Box>
+                      <Typography
+                        variant="h6"
+                        component="h4"
+                        sx={{
+                          fontWeight: 600,
+                          fontSize: { xs: '1rem', md: '1.125rem' },
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {t('guide.content.claudeAI.faq1Q')}
+                      </Typography>
+                    </Box>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        lineHeight: 1.7,
+                        fontSize: { xs: '0.95rem', md: '1rem' },
+                        color: theme.palette.text.secondary,
+                        pl: 7,
+                      }}
+                    >
+                      {t('guide.content.claudeAI.faq1A')}
+                    </Typography>
+                  </Paper>
 
                   {/* FAQ 2 */}
-                  <Typography
-                    variant="h6"
-                    component="h4"
+                  <Paper
+                    elevation={1}
                     sx={{
-                      fontWeight: 600,
-                      mb: 1,
-                      fontSize: { xs: '1rem', md: '1.125rem' },
+                      p: 3,
+                      borderRadius: '12px',
+                      border: `2px solid transparent`,
+                      transition: 'all 0.3s ease',
+                      background:
+                        theme.palette.mode === 'dark'
+                          ? 'rgba(255, 255, 255, 0.05)'
+                          : 'rgba(0, 0, 0, 0.02)',
+                      '&:hover': {
+                        borderColor: theme.palette.primary.main,
+                        transform: 'translateY(-4px)',
+                        boxShadow: theme.shadows[4],
+                      },
                     }}
                   >
-                    {t('guide.content.claudeAI.faq2Q')}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      mb: 3,
-                      lineHeight: 1.8,
-                      color: theme.palette.text.secondary,
-                    }}
-                  >
-                    {t('guide.content.claudeAI.faq2A')}
-                  </Typography>
+                    <Box sx={{ display: 'flex', gap: 2, mb: 1.5 }}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: 40,
+                          height: 40,
+                          borderRadius: '10px',
+                          background: `linear-gradient(135deg, ${theme.palette.primary.main}20, ${theme.palette.primary.main}40)`,
+                          color: theme.palette.primary.main,
+                          flexShrink: 0,
+                        }}
+                      >
+                        <HelpOutlineIcon sx={{ fontSize: 24 }} />
+                      </Box>
+                      <Typography
+                        variant="h6"
+                        component="h4"
+                        sx={{
+                          fontWeight: 600,
+                          fontSize: { xs: '1rem', md: '1.125rem' },
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {t('guide.content.claudeAI.faq2Q')}
+                      </Typography>
+                    </Box>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        lineHeight: 1.7,
+                        fontSize: { xs: '0.95rem', md: '1rem' },
+                        color: theme.palette.text.secondary,
+                        pl: 7,
+                      }}
+                    >
+                      {t('guide.content.claudeAI.faq2A')}
+                    </Typography>
+                  </Paper>
 
                   {/* FAQ 3 */}
-                  <Typography
-                    variant="h6"
-                    component="h4"
+                  <Paper
+                    elevation={1}
                     sx={{
-                      fontWeight: 600,
-                      mb: 1,
-                      fontSize: { xs: '1rem', md: '1.125rem' },
+                      p: 3,
+                      borderRadius: '12px',
+                      border: `2px solid transparent`,
+                      transition: 'all 0.3s ease',
+                      background:
+                        theme.palette.mode === 'dark'
+                          ? 'rgba(255, 255, 255, 0.05)'
+                          : 'rgba(0, 0, 0, 0.02)',
+                      '&:hover': {
+                        borderColor: theme.palette.primary.main,
+                        transform: 'translateY(-4px)',
+                        boxShadow: theme.shadows[4],
+                      },
                     }}
                   >
-                    {t('guide.content.claudeAI.faq3Q')}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      lineHeight: 1.8,
-                      color: theme.palette.text.secondary,
-                    }}
-                  >
-                    {t('guide.content.claudeAI.faq3A')}
-                  </Typography>
+                    <Box sx={{ display: 'flex', gap: 2, mb: 1.5 }}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: 40,
+                          height: 40,
+                          borderRadius: '10px',
+                          background: `linear-gradient(135deg, ${theme.palette.primary.main}20, ${theme.palette.primary.main}40)`,
+                          color: theme.palette.primary.main,
+                          flexShrink: 0,
+                        }}
+                      >
+                        <HelpOutlineIcon sx={{ fontSize: 24 }} />
+                      </Box>
+                      <Typography
+                        variant="h6"
+                        component="h4"
+                        sx={{
+                          fontWeight: 600,
+                          fontSize: { xs: '1rem', md: '1.125rem' },
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {t('guide.content.claudeAI.faq3Q')}
+                      </Typography>
+                    </Box>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        lineHeight: 1.7,
+                        fontSize: { xs: '0.95rem', md: '1rem' },
+                        color: theme.palette.text.secondary,
+                        pl: 7,
+                      }}
+                    >
+                      {t('guide.content.claudeAI.faq3A')}
+                    </Typography>
+                  </Paper>
                 </Box>
-              </Paper>
+              </Box>
             </motion.div>
           )}
 
@@ -785,14 +914,7 @@ export default function GuidePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <Paper
-                elevation={2}
-                sx={{
-                  p: { xs: 3, md: 4 },
-                  mb: 6,
-                  textAlign: 'center',
-                }}
-              >
+              <Box sx={{ mb: 8, textAlign: 'center', py: 8 }}>
                 <Typography
                   variant="h5"
                   sx={{
@@ -802,7 +924,7 @@ export default function GuidePage() {
                 >
                   TBD
                 </Typography>
-              </Paper>
+              </Box>
             </motion.div>
           )}
 
@@ -813,14 +935,7 @@ export default function GuidePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <Paper
-                elevation={2}
-                sx={{
-                  p: { xs: 3, md: 4 },
-                  mb: 6,
-                  textAlign: 'center',
-                }}
-              >
+              <Box sx={{ mb: 8, textAlign: 'center', py: 8 }}>
                 <Typography
                   variant="h5"
                   sx={{
@@ -830,7 +945,7 @@ export default function GuidePage() {
                 >
                   TBD
                 </Typography>
-              </Paper>
+              </Box>
             </motion.div>
           )}
 
@@ -841,14 +956,7 @@ export default function GuidePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <Paper
-                elevation={2}
-                sx={{
-                  p: { xs: 3, md: 4 },
-                  mb: 6,
-                  textAlign: 'center',
-                }}
-              >
+              <Box sx={{ mb: 8, textAlign: 'center', py: 8 }}>
                 <Typography
                   variant="h5"
                   sx={{
@@ -858,7 +966,7 @@ export default function GuidePage() {
                 >
                   TBD
                 </Typography>
-              </Paper>
+              </Box>
             </motion.div>
           )}
         </motion.div>
