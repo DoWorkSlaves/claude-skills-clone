@@ -269,7 +269,23 @@ export default function GuidePage() {
                     },
                   }}
                 >
-                  {t('guide.content.claudeAI.alert')}
+                  {language === 'en' && t('guide.content.claudeAI.alert.before')}
+                  <Link
+                    href="https://claude.ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      color: 'inherit',
+                      fontWeight: 600,
+                      textDecoration: 'underline',
+                      '&:hover': {
+                        textDecoration: 'none',
+                      },
+                    }}
+                  >
+                    claude.ai
+                  </Link>
+                  {t('guide.content.claudeAI.alert.after')}
                 </Alert>
 
                 {/* Select Skills Section */}
@@ -448,7 +464,7 @@ export default function GuidePage() {
                           },
                         }}
                       >
-                        Claude.ai
+                        claude.ai
                       </Link>
                       {language === 'ko' ? '에 접속해 주세요.' : ' - Go to the website.'}
                     </Typography>
