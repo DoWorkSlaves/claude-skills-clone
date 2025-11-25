@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Typography, Container, useTheme } from "@mui/material";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { Box, Typography, Container, useTheme, useMediaQuery } from "@mui/material";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export const InteractiveHero: React.FC = () => {
@@ -10,25 +10,17 @@ export const InteractiveHero: React.FC = () => {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // Scroll animation setup
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
-  const y = useTransform(scrollY, [0, 300], [0, -50]);
-
-  // Smooth spring animation for mouse movement
-  const mouseX = useSpring(mousePosition.x, { stiffness: 100, damping: 20 });
-  const mouseY = useSpring(mousePosition.y, { stiffness: 100, damping: 20 });
-
-  // Track mouse movement
+  // Track mouse movement only on desktop
   useEffect(() => {
+    if (isMobile) return; // Skip on mobile for performance
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-      const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
       setMousePosition({ x, y });
     };
 
@@ -37,102 +29,138 @@ export const InteractiveHero: React.FC = () => {
       container.addEventListener("mousemove", handleMouseMove);
       return () => container.removeEventListener("mousemove", handleMouseMove);
     }
-  }, []);
-
-  // Gradient that follows mouse
-  const gradientX = useTransform(mouseX, [-0.5, 0.5], [30, 70]);
-  const gradientY = useTransform(mouseY, [-0.5, 0.5], [30, 70]);
+  }, [isMobile]);
 
   return (
-    <motion.div
+    <Box
       ref={containerRef}
-      style={{ opacity, scale, y }}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      sx={{
+        position: "relative",
+        minHeight: { xs: "35vh", md: "42.5vh" },
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+        background:
+          theme.palette.mode === "dark"
+            ? "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)"
+            : "linear-gradient(135deg, #FFFBF5 0%, #FFF5F7 100%)",
+      }}
     >
-      <Box
-        sx={{
-          position: "relative",
-          minHeight: { xs: "35vh", md: "42.5vh" },
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-          background:
-            theme.palette.mode === "dark"
-              ? "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)"
-              : "linear-gradient(135deg, #FFFBF5 0%, #FFF5F7 100%)",
-        }}
-      >
-        {/* Animated gradient background */}
-        <motion.div
-          style={{
+      {/* Animated gradient background - only on desktop */}
+      {!isMobile && (
+        <Box
+          sx={{
             position: "absolute",
             width: "200%",
             height: "200%",
-            background: `radial-gradient(circle at ${gradientX}% ${gradientY}%, ${
+            background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, ${
               theme.palette.mode === "dark"
                 ? "rgba(255, 133, 166, 0.15)"
                 : "rgba(255, 107, 157, 0.1)"
             } 0%, transparent 50%)`,
             pointerEvents: "none",
+            transition: "background 0.3s ease-out",
           }}
         />
+      )}
 
-        {/* Gradient Orbs */}
-        <motion.div
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{
-            position: "absolute",
-            width: "500px",
-            height: "500px",
-            borderRadius: "50%",
-            background: `radial-gradient(circle, ${
-              theme.palette.mode === "dark"
-                ? "rgba(255, 196, 109, 0.1)"
-                : "rgba(255, 184, 77, 0.15)"
-            } 0%, transparent 70%)`,
-            top: "10%",
-            right: "10%",
-            filter: "blur(60px)",
-            pointerEvents: "none",
-          }}
-        />
+      {/* Gradient Orbs - Simplified for mobile */}
+      {!isMobile ? (
+        <>
+          <motion.div
+            animate={{
+              x: [0, 30, 0],
+              y: [0, -30, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{
+              position: "absolute",
+              width: "500px",
+              height: "500px",
+              borderRadius: "50%",
+              background: `radial-gradient(circle, ${
+                theme.palette.mode === "dark"
+                  ? "rgba(255, 196, 109, 0.1)"
+                  : "rgba(255, 184, 77, 0.15)"
+              } 0%, transparent 70%)`,
+              top: "10%",
+              right: "10%",
+              filter: "blur(60px)",
+              pointerEvents: "none",
+            }}
+          />
 
-        <motion.div
-          animate={{
-            x: [0, -30, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{
-            position: "absolute",
-            width: "400px",
-            height: "400px",
-            borderRadius: "50%",
-            background: `radial-gradient(circle, ${
-              theme.palette.mode === "dark"
-                ? "rgba(255, 133, 166, 0.15)"
-                : "rgba(255, 107, 157, 0.2)"
-            } 0%, transparent 70%)`,
-            bottom: "20%",
-            left: "10%",
-            filter: "blur(80px)",
-            pointerEvents: "none",
-          }}
-        />
+          <motion.div
+            animate={{
+              x: [0, -30, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{
+              position: "absolute",
+              width: "400px",
+              height: "400px",
+              borderRadius: "50%",
+              background: `radial-gradient(circle, ${
+                theme.palette.mode === "dark"
+                  ? "rgba(255, 133, 166, 0.15)"
+                  : "rgba(255, 107, 157, 0.2)"
+              } 0%, transparent 70%)`,
+              bottom: "20%",
+              left: "10%",
+              filter: "blur(80px)",
+              pointerEvents: "none",
+            }}
+          />
+        </>
+      ) : (
+        // Static gradient orbs for mobile (no animation)
+        <>
+          <Box
+            sx={{
+              position: "absolute",
+              width: "300px",
+              height: "300px",
+              borderRadius: "50%",
+              background: `radial-gradient(circle, ${
+                theme.palette.mode === "dark"
+                  ? "rgba(255, 196, 109, 0.08)"
+                  : "rgba(255, 184, 77, 0.12)"
+              } 0%, transparent 70%)`,
+              top: "10%",
+              right: "5%",
+              filter: "blur(40px)",
+              pointerEvents: "none",
+            }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              width: "250px",
+              height: "250px",
+              borderRadius: "50%",
+              background: `radial-gradient(circle, ${
+                theme.palette.mode === "dark"
+                  ? "rgba(255, 133, 166, 0.12)"
+                  : "rgba(255, 107, 157, 0.15)"
+              } 0%, transparent 70%)`,
+              bottom: "15%",
+              left: "5%",
+              filter: "blur(50px)",
+              pointerEvents: "none",
+            }}
+          />
+        </>
+      )}
 
         {/* Content */}
         <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
@@ -142,19 +170,13 @@ export const InteractiveHero: React.FC = () => {
               px: { xs: 2, md: 4 },
             }}
           >
-            {/* Main heading with 3D effect */}
+            {/* Main heading */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <motion.div
-                style={{
-                  rotateX: useTransform(mouseY, [-0.5, 0.5], [5, -5]),
-                  rotateY: useTransform(mouseX, [-0.5, 0.5], [-5, 5]),
-                }}
-              >
-                <Typography
+              <Typography
                   variant="h1"
                   sx={{
                     fontSize: {
@@ -181,7 +203,6 @@ export const InteractiveHero: React.FC = () => {
                 >
                   Claude Hub
                 </Typography>
-              </motion.div>
             </motion.div>
 
             {/* Subtitle */}
@@ -226,26 +247,27 @@ export const InteractiveHero: React.FC = () => {
               </Typography>
             </motion.div>
 
-            {/* Scroll indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.5 }}
-              style={{
-                position: "absolute",
-                bottom: "40px",
-                left: "50%",
-                transform: "translateX(-50%)",
-              }}
-            >
-              <motion.div
-                animate={{
-                  y: [0, 10, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
+            {/* Scroll indicator - Simplified with CSS animation */}
+            {!isMobile && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "40px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  animation: "fadeIn 1s ease-in-out 1.5s forwards",
+                  opacity: 0,
+                  "@keyframes fadeIn": {
+                    to: { opacity: 1 },
+                  },
+                  "@keyframes bounce": {
+                    "0%, 100%": { transform: "translateY(0)" },
+                    "50%": { transform: "translateY(10px)" },
+                  },
+                  "@keyframes scroll": {
+                    "0%, 100%": { transform: "translateY(0)", opacity: 0.5 },
+                    "50%": { transform: "translateY(15px)", opacity: 1 },
+                  },
                 }}
               >
                 <Box
@@ -256,19 +278,11 @@ export const InteractiveHero: React.FC = () => {
                     borderRadius: "20px",
                     position: "relative",
                     opacity: 0.5,
+                    animation: "bounce 1.5s ease-in-out infinite",
                   }}
                 >
-                  <motion.div
-                    animate={{
-                      y: [0, 15, 0],
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    style={{
+                  <Box
+                    sx={{
                       position: "absolute",
                       top: "8px",
                       left: "50%",
@@ -277,14 +291,14 @@ export const InteractiveHero: React.FC = () => {
                       height: "8px",
                       borderRadius: "2px",
                       backgroundColor: theme.palette.text.secondary,
+                      animation: "scroll 1.5s ease-in-out infinite",
                     }}
                   />
                 </Box>
-              </motion.div>
-            </motion.div>
+              </Box>
+            )}
           </Box>
         </Container>
       </Box>
-    </motion.div>
   );
 };
